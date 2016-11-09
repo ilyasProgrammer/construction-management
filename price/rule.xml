@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="action_update_price" model="ir.actions.server">
+        <field name="name">Price update</field>
+        <field name="model_id" ref="model_price"/>
+        <field name="condition">True</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">self.action_update_price(cr, uid, context=context)</field>
+    </record>
+    <record id="rule_price_update" model="base.action.rule">
+        <field name="name">Price update on currency</field>
+        <field name="model_id" ref="base.model_res_currency"/>
+        <field name="sequence">61</field>
+        <field name="kind">on_write</field>
+        <field name="server_action_ids" eval="[(6, 0, [ref('action_update_price')])]"/>
+    </record>
+    <record id="rule_price_update_rate" model="base.action.rule">
+        <field name="name">Price update on rate</field>
+        <field name="model_id" ref="base.model_res_currency_rate"/>
+        <field name="sequence">61</field>
+        <field name="kind">on_write</field>
+        <field name="server_action_ids" eval="[(6, 0, [ref('action_update_price')])]"/>
+    </record>
+</data>
+</openerp>
