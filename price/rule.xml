@@ -2,13 +2,22 @@
 <openerp>
 <data>
     <record id="action_update_price" model="ir.actions.server">
-        <field name="name">Price update</field>
+        <field name="name">Price update on currency</field>
         <field name="model_id" ref="model_price"/>
         <field name="condition">True</field>
         <field name="type">ir.actions.server</field>
         <field name="state">code</field>
         <field name="code">self.action_update_price(cr, uid, context=context)</field>
     </record>
+    <record id="action_update_price_on_invoice" model="ir.actions.server">
+        <field name="name">Price update on invoice</field>
+        <field name="model_id" ref="model_price"/>
+        <field name="condition">True</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">self.action_update_price_on_invoice(cr, uid, context=context)</field>
+    </record>
+
     <record id="rule_price_update" model="base.action.rule">
         <field name="name">Price update on currency</field>
         <field name="model_id" ref="base.model_res_currency"/>
@@ -22,6 +31,13 @@
         <field name="sequence">61</field>
         <field name="kind">on_write</field>
         <field name="server_action_ids" eval="[(6, 0, [ref('action_update_price')])]"/>
+    </record>
+    <record id="rule_price_update_invoice" model="base.action.rule">
+        <field name="name">Price update on purchase invoice</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="sequence">62</field>
+        <field name="kind">on_write</field>
+        <field name="server_action_ids" eval="[(6, 0, [ref('action_update_price_on_invoice')])]"/>
     </record>
 </data>
 </openerp>
