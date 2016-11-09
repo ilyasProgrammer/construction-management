@@ -29,7 +29,7 @@ class UpdatePrice(models.Model):
                        'purchase_num_invoiced', 'sales_gap', 'purchase_gap', 'total_cost', 'sale_expected',
                        'normal_cost', 'total_margin', 'expected_margin', 'total_margin_rate', 'expected_margin_rate']
         prods = self.env['purchase.order.line'].search([])
-        currency = self.env['res.currency'].browse(23)
+        currency = self.env['res.currency'].browse(23)  # must be UAH
         _logger.info('New exchange rate = %s' % currency.rate)
         for prod in prods:
             res_val = prod.product_id._product_margin([prod.product_id.id], [x for x in fields_list])
