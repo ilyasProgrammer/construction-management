@@ -12,10 +12,6 @@ _logger = logging.getLogger(__name__)
 class UpdatePrice(models.Model):
     _name = 'price'
 
-    fields_list = ['turnover', 'sale_avg_price', 'sale_purchase_price', 'sale_num_invoiced',
-                   'purchase_num_invoiced', 'sales_gap', 'purchase_gap', 'total_cost', 'sale_expected',
-                   'normal_cost', 'total_margin', 'expected_margin', 'total_margin_rate', 'expected_margin_rate']
-
     @api.model
     def action_update_price(self):
         if self._context.get('active_model', False) == 'account.invoice':
@@ -35,7 +31,7 @@ class UpdatePrice(models.Model):
             _logger.info('old_rate = %s  new_rate = %s' % (old_rate, new_rate))
             standard_price = (product.standard_price/old_rate)*new_rate
             product.standard_price = standard_price
-            seller_info = product.seller_ids.filtered(lambda reg: reg.use_price_list == True)[0]
+            seller_info = product.seller_ids.filtered(lambda reg: reg.use_price_list is True)[0]
             price_list = seller_info.name.property_product_pricelist
             mult = price_list.version_id.items_id.price_discount
             surcharge = price_list.version_id.items_id.price_surcharge
@@ -50,8 +46,8 @@ class UpdatePrice(models.Model):
         if len(product.seller_ids) < 1:
             error_msg = 'Must be at lest one supplier for product %s' % product.name
         if len(product.seller_ids.name.property_product_pricelist) < 1:
-            error_msg = 'Empty property_product_pricelist %s' % product.name
-        if len(product.seller_ids.filtered(lambda reg: reg.use_price_list == True)) < 1:
+            error_msg = 'Supplier %s have no price list.' % product.seller_ids.name
+        if len(product.seller_ids.filtered(lambda reg: reg.use_price_list is True)) < 1:
             error_msg = 'No supplier with use_price_list flag set %s' % product.name
         rates = [(r.name, r.rate) for r in self.env['res.currency.rate'].search([('currency_id', '=', currency.id)])]
         if len(rates) < 2:
