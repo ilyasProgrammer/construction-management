@@ -12,6 +12,7 @@
                 ],
     'data': [
         'rule.xml',
+        'views.xml',
     ],
     'qweb': [
     ],
