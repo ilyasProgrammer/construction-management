@@ -7,7 +7,9 @@
     'category': 'Accounting & Finance',
     'description': """ """,
     'website': '',
-    'depends': ['base_action_rule'],
+    'depends': ['base_action_rule',
+                'product_margin',
+                ],
     'data': [
         'rule.xml',
     ],
