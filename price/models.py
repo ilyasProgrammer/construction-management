@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from openerp import tools
 import logging
 from openerp import api, models, fields
 from operator import itemgetter
@@ -28,7 +27,8 @@ class UpdatePrice(models.Model):
             else:
                 prods = self.env['product.product'].search([('standard_price', '!=', 0)])
         for product in prods:
-            self.validations(product)
+            if not self.product_valid(product):
+                continue
             currency = product.currency_id
             rates = [(r.name, r.rate) for r in self.env['res.currency.rate'].search([('currency_id', '=', currency.id)])]
             rates.sort(key=itemgetter(0))  # sort by date
@@ -51,7 +51,7 @@ class UpdatePrice(models.Model):
             product.list_price = list_price
             _logger.info('\n Product = %s \n new_cost_price = %s \n new_sale_price = %s' % (product.name, standard_price, list_price))
 
-    def validations(self, product):
+    def product_valid(self, product):
         error_msg = ''
         if not product.currency_id:
             error_msg += 'Product must have currency. Product = %s \n' % product.id
@@ -68,7 +68,9 @@ class UpdatePrice(models.Model):
             error_msg += 'Currency %s has less than 2 rates \n' % product.currency_id.name
         if error_msg:
             _logger.error(error_msg)
-            raise ValidationError(error_msg)
+            return False
+        return True
+            # raise ValidationError(error_msg)
 
 
 class Product(models.Model):
