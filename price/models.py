@@ -22,7 +22,11 @@ class UpdatePrice(models.Model):
         else:
             _logger.info('Start price updating on exchange rate alteration')
             # prods = [r.product_id for r in self.env['purchase.order.line'].search([])]
-            prods = self.env['product.product'].search([('standard_price', '!=', 0)])
+            active_id = self._context.get('active_id', False)
+            if active_id:
+                prods = self.env['product.product'].search([('standard_price', '!=', 0), ('currency_id', '=', active_id)])
+            else:
+                prods = self.env['product.product'].search([('standard_price', '!=', 0)])
         for product in prods:
             self.validations(product)
             currency = product.currency_id
