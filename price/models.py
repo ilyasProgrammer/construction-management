@@ -21,7 +21,8 @@ class UpdatePrice(models.Model):
             prods = [r.product_id for r in invoice.invoice_line]
         else:
             _logger.info('Start price updating on exchange rate alteration')
-            prods = [r.product_id for r in self.env['purchase.order.line'].search([])]
+            # prods = [r.product_id for r in self.env['purchase.order.line'].search([])]
+            prods = self.env['product.product'].search([('standard_price', '!=', 0)])
         for product in prods:
             self.validations(product)
             currency = product.currency_id
@@ -31,7 +32,7 @@ class UpdatePrice(models.Model):
             t = time.strptime(new_rate_date, '%Y-%m-%d %H:%M:%S')
             n = time.strptime(fields.Datetime.now(), '%Y-%m-%d %H:%M:%S')
             if (t.tm_yday, t.tm_year) != (n.tm_yday, n.tm_year):
-                _logger.info('Currency %s have no new rate.' % currency.name)
+                _logger.info('Currency %s have no new rate for today.' % currency.name)
                 continue
             new_rate = rates[1][1]
             old_rate = rates[0][1]
@@ -47,20 +48,20 @@ class UpdatePrice(models.Model):
             _logger.info('\n Product = %s \n new_cost_price = %s \n new_sale_price = %s' % (product.name, standard_price, list_price))
 
     def validations(self, product):
-        error_msg = False
+        error_msg = ''
         if not product.currency_id:
-            error_msg = 'Product must have currency. Product = %s' % product.name
+            error_msg += 'Product must have currency. Product = %s \n' % product.id
         if not product.standard_price:
-            error_msg = 'Cost price must be > 0. Product = %s' % product.name
+            error_msg += 'Cost price must be > 0. Product = %s \n' % product.id
         if len(product.seller_ids) < 1:
-            error_msg = 'Must be at least one supplier for product %s' % product.name
+            error_msg += 'Must be at least one supplier for product %s \n' % product.id
         if len(product.seller_ids.name.property_product_pricelist) < 1:
-            error_msg = 'Supplier %s have no price list.' % product.seller_ids.name
+            error_msg += 'Supplier %s have no price list. \n' % product.seller_ids.name
         if len(product.seller_ids.filtered(lambda reg: reg.use_price_list is True)) < 1:
-            error_msg = 'No supplier with use_price_list flag set in product %s' % product.name
+            error_msg = 'No supplier with use_price_list flag set in product %s \n' % product.id
         rates = [(r.name, r.rate) for r in self.env['res.currency.rate'].search([('currency_id', '=', product.currency_id.id)])]
         if len(rates) < 2:
-            error_msg = 'Currency %s has less than 2 rates' % product.currency_id.name
+            error_msg += 'Currency %s has less than 2 rates \n' % product.currency_id.name
         if error_msg:
             _logger.error(error_msg)
             raise ValidationError(error_msg)
