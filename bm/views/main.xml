@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Top menu item -->
+        <menuitem name="Building" id="bm_menu_main" sequence="60"/>
+        <menuitem name="Menu" id="bm_menu_left" parent="bm_menu_main" sequence="1"/>
+        <!--WBS-->
+        <record id="wbs_act" model="ir.actions.act_window">
+            <field name="name">WBS</field>
+            <field name="res_model">bm.wbs</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new WBS
+                </p>
+            </field>
+        </record>
+
+        <record id="wbs_search_view" model="ir.ui.view">
+            <field name="name">bm.wbs.search</field>
+            <field name="model">bm.wbs</field>
+            <field name="arch" type="xml">
+                <search string="WBS">
+                    <field name="name" string="WBS"/>
+                    <field name="parent_id"/>
+                </search>
+            </field>
+        </record>
+        <record id="wbs_form_view" model="ir.ui.view">
+            <field name="name">bm.wbs.form</field>
+            <field name="model">bm.wbs</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1 class="o_row">
+                            <field name="name" placeholder="e.g. Lamps"/>
+                        </h1>
+                    </div>
+                    <group name="first" col="4">
+                        <group>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group></group>
+                    </group>
+                    <div class="oe_clear"/>
+                    <h2>Description</h2>
+                    <field name="description" type="html"/>
+                    <div class="oe_clear"/>
+                </form>
+            </field>
+        </record>
+        <record id="wbs_list_view" model="ir.ui.view">
+            <field name="name">bm.wbs.form</field>
+            <field name="model">bm.wbs</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree string="WBS">
+                    <field name="complete_name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="wbs_act" model="ir.actions.act_window">
+            <field name="name">WBS</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bm.wbs</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="wbs_search_view"/>
+            <field name="view_id" ref="wbs_list_view"/>
+        </record>
+        <menuitem action="wbs_act" id="bm_action_wbs" name="WBS" parent="bm_menu_left"/>
+        <!--Project-->
+        <record id="project_act" model="ir.actions.act_window">
+            <field name="name">Project</field>
+            <field name="res_model">bm.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new Project
+                </p>
+            </field>
+        </record>
+        <record id="view_project_tree" model="ir.ui.view">
+            <field name="name">bm.project.tree</field>
+            <field name="model">bm.project</field>
+            <field name="arch" type="xml">
+                <tree string="Project">
+                    <field name="wbs_id"/>
+                    <field name="full_name"/>
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="code"/>
+                    <field name="engineer_id"/>
+                    <field name="foremen_ids"/>
+                    <field name="attachment_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_project_form" model="ir.ui.view">
+            <field name="name">bm.project.form</field>
+            <field name="model">bm.project</field>
+            <field name="arch" type="xml">
+                <form string="Project">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet string="Project">
+                        <div class="oe_button_box" name="button_box" groups="base.group_user">
+                            <button class="oe_stat_button" name="attachment_tree_view" type="object"
+                                    icon="fa-files-o">
+                                <field string="Documents" name="doc_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Project Name"/>
+                            </h1>
+                        </div>
+                        <div class="oe_row">
+                            <h1>
+                                <field name="full_name" placeholder="Full name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Data">
+                                <group name="group_alias" colspan="2" col="2">
+                                    <group>
+                                        <field name="engineer_id"/>
+                                    </group>
+                                    <group></group>
+                                </group>
+                                <field name="foremen_ids" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <menuitem action="project_act" id="bm_action_project" name="Project" parent="bm_menu_left"/>
+    </data>
+</openerp>

@@ -9,10 +9,10 @@ _logger = logging.getLogger(__name__)
 
 class WBS(models.Model):
     _name = 'bm.wbs'
-    _description = 'Иерархическая структура работ'
+    _inherit = 'product.category'
+    _description = 'The hierarchical structure of work'
 
-    code = fields.Char(string='Код')
-    name = fields.Char(string='Имя', required=True)
-    description = fields.Char(string='Описание', required=True)
-    parent_id = fields.Many2one('bm.wbs', string='Родитель', required=True)
-    children_ids = fields.One2many('bm.wbs', 'id', string='Потомки')
+    code = fields.Char(string='Code')
+    name = fields.Char(string='Name', required=True)
+    description = fields.Html(string='Description', required=True)
+    parent_id = fields.Many2one('bm.wbs', 'Parent Category', select=True, ondelete='cascade')

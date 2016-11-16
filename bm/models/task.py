@@ -9,17 +9,17 @@ _logger = logging.getLogger(__name__)
 
 class Task(models.Model):
     _inherit = 'project.task'
-    _description = 'Задание'
+    _description = 'Task'
 
-    code = fields.Char(string='Номер')
-    date = fields.Datetime(string='Дата задания')
-    start = fields.Date(string='Дата начала работ')
-    finish = fields.Date(string='Дата окончания работ')
-    foremen_id = fields.Many2one('hr.employee', string='Прораб', domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
-    engineer_id = fields.Many2one('hr.employee', string='Инженер')
-    estimate_ids = fields.One2many('project.task.lines', 'task_id', string='Расценки')
+    code = fields.Char(string='Number')
+    date = fields.Datetime(string='Task date')
+    start = fields.Date(string='Start date')
+    finish = fields.Date(string='Finish date')
+    foremen_id = fields.Many2one('hr.employee', string='Foreman', domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
+    engineer_id = fields.Many2one('hr.employee', string='Engineer')
+    estimate_ids = fields.One2many('project.task.lines', 'task_id', string='Estimates')
     # договор - это project_id в родной модели
-    report_ids = fields.One2many('bm.report', 'task_id', string='Отчеты')
+    report_ids = fields.One2many('bm.report', 'task_id', string='Reports')
     state = fields.Selection([('draft', 'Черновик'),
                               ('wait_begin', 'Ожидает начала работ'),
                               ('in_work', 'В работе'),
@@ -31,10 +31,10 @@ class Task(models.Model):
 
 class TaskLines(models.Model):
     _name = 'project.task.lines'
-    _description = 'Строка задания (расценка)'
+    _description = 'Task line (estimate)'
 
     task_id = fields.Many2one('project.task')
-    pricing_id = fields.Many2one('bm.pricing', string='Расценка')
-    labor = fields.Float(string='Трудозатраты')
-    mech = fields.Float(string='Механические часы')
-    est_cost = fields.Float(string='Сметная стоимость')
+    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
+    labor = fields.Float(string='Labor')
+    mech = fields.Float(string='Mechanical hours')
+    est_cost = fields.Float(string='Estimation cost')

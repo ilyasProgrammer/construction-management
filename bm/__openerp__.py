@@ -12,6 +12,7 @@
         'hr',
     ],
     'data': [
+        'views/main.xml'
     ],
     'qweb': [
     ],

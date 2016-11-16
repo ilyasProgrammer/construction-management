@@ -1,0 +1,532 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* bm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-16 17:15+0000\n"
+"PO-Revision-Date: 2016-11-16 17:15+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_defaults
+msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_active
+msgid "Active"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_id
+msgid "Alias"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_contact
+msgid "Alias Contact Security"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_model
+msgid "Alias Model"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_name
+msgid "Alias Name"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_domain
+msgid "Alias domain"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_model_id
+msgid "Aliased Model"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_line_ids
+msgid "Analytic Lines"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_balance
+msgid "Balance"
+msgstr ""
+
+#. module: bm
+#: model:ir.ui.menu,name:bm.bm_menu_main
+msgid "Building"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_use_tasks
+msgid "Check this box to manage internal activities through this project"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_color
+msgid "Color Index"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_company_id
+msgid "Company"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_company_uom_id
+msgid "Company UOM"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_analytic_account_id
+msgid "Contract/Analytic"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_project_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_report_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_spj_create_uid
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_create_uid
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_project_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_report_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_spj_create_date
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_create_date
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_credit
+msgid "Credit"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_message_last_post
+msgid "Date of the last message posted on the record."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_debit
+msgid "Debit"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_defaults
+msgid "Default Values"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_project_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_report_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_spj_display_name
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_display_name
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_estimate_id
+msgid "Estimate id"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_date
+msgid "Expiration Date"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: bm
+#: model:ir.ui.menu,name:bm.bm_menu_wbs_qwe
+msgid "GTD"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_label_tasks
+msgid "Gives label to tasks on project's kanban view."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_sequence
+msgid "Gives the sequence order when displaying a list of Projects."
+msgstr ""
+
+#. module: bm
+#: model:ir.actions.act_window,help:bm.wbs_act
+msgid "Here, you can create new WBS"
+msgstr "Создайте новый ИСР"
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_privacy_visibility
+msgid "Holds visibility of the tasks or issues that belong to the current project:\n"
+"- Portal : employees see everything;\n"
+"   if portal is activated, portal users see the tasks or issues followed by\n"
+"   them or by someone of their company\n"
+"- Employees Only: employees see all tasks or issues\n"
+"- Followers Only: employees see only the followed tasks or issues; if portal\n"
+"   is activated, portal users see the followed tasks or issues."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_id
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_id
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_id
+#: model:ir.model.fields,field_description:bm.field_bm_project_id
+#: model:ir.model.fields,field_description:bm.field_bm_report_id
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_id
+#: model:ir.model.fields,field_description:bm.field_bm_spj_id
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_id
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_id
+msgid "ID"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_parent_thread_id
+msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_message_unread
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_active
+msgid "If the active field is set to False, it will allow you to hide the project without removing it."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_id
+msgid "Internal email associated with this project. Incoming emails are automatically synchronized with Tasks (or optionally Issues if the Issue Tracker module is installed)."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_last_post
+msgid "Last Message Date"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_pricing___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_project___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_report___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_spj___last_update
+#: model:ir.model.fields,field_description:bm.field_bm_wbs___last_update
+#: model:ir.model.fields,field_description:bm.field_project_task_lines___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_project_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_report_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_spj_write_uid
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_write_uid
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_lines_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_estimate_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_pricing_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_project_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_report_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_spj_write_date
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_write_date
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_analytic_account_id
+msgid "Link this project to an analytic account if you need financial management on projects. It enables you to connect projects with budgets, planning, cost and revenue analysis, timesheets on projects, etc."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_doc_count
+msgid "Number of documents attached"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_force_thread_id
+msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_user_id
+msgid "Owner"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_parent_model_id
+msgid "Parent Model"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_parent_thread_id
+msgid "Parent Record Thread ID"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_parent_model_id
+msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_contact
+msgid "Policy to post a message on the document using the mailgateway.\n"
+"- everyone: everyone can post\n"
+"- partners: only authenticated partners\n"
+"- followers: only followers of the related document or members of following channels\n"
+""
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_privacy_visibility
+msgid "Privacy / Visibility"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_user_id
+msgid "Project Manager"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_spj_project_external_id
+msgid "Project external id"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_spj_project_local_id
+msgid "Project local id"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_project_ids
+msgid "Projects"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_alias_force_thread_id
+msgid "Record Thread ID"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_report_lines_report_id
+msgid "Report id"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_date_start
+msgid "Start Date"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_account_type
+msgid "State"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_tag_ids
+msgid "Tags"
+msgstr ""
+
+#. module: bm
+#: model:ir.model,name:bm.model_project_task
+msgid "Task"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_tasks
+msgid "Task Activities"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_report_task_id
+#: model:ir.model.fields,field_description:bm.field_project_task_lines_task_id
+msgid "Task id"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_task_count
+#: model:ir.model.fields,field_description:bm.field_bm_project_task_needaction_count
+#: model:ir.model.fields,field_description:bm.field_bm_project_use_tasks
+msgid "Tasks"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_type_ids
+msgid "Tasks Stages"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_model
+msgid "The kind of document created when an email is received on this project's email alias"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_model_id
+msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_name
+msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_alias_user_id
+msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,help:bm.field_bm_project_resource_calendar_id
+msgid "Timetable working hours to adjust the gantt diagram report"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_label_tasks
+msgid "Use Tasks as"
+msgstr ""
+
+#. module: bm
+#: model:ir.actions.act_window,name:bm.wbs_act
+#: model:ir.ui.menu,name:bm.bm_action_wbs
+#: model:ir.ui.menu,name:bm.bm_menu_wbs
+#: model:ir.ui.view,arch_db:bm.view_task_tree
+msgid "WBS"
+msgstr "ИСР"
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_resource_calendar_id
+msgid "Working Time"
+msgstr ""
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_name
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_parent_id
+msgid "gfds"
+msgstr "АААА"
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_children_ids
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_code
+#: model:ir.model.fields,field_description:bm.field_bm_wbs_description
+msgid "sdfg"
+msgstr "фффф"
+
+#. module: bm
+#: model:ir.model.fields,field_description:bm.field_bm_project_project_count
+#: model:ir.model.fields,field_description:bm.field_bm_project_task_ids
+msgid "unknown"
+msgstr "йййй"

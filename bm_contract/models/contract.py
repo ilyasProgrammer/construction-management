@@ -9,24 +9,24 @@ _logger = logging.getLogger(__name__)
 
 class Contract(models.Model):
     _inherit = 'project.project'
-    _description = 'Договор'
+    _description = 'Contract'
 
-    bm_project_id = fields.Many2one('bm.project', string='Проект')
-    date = fields.Date(string='Дата', required=True)
-    start = fields.Date(string='Дата начала работ')
-    finish = fields.Date(string='Дата окончания работ')
+    bm_project_id = fields.Many2one('bm.project', string='Project')
+    foremen_ids = fields.Many2many('hr.employee', string='Foremen', required=True)
+    date = fields.Date(string='Date', required=True)
+    start = fields.Date(string='Begin date')
+    finish = fields.Date(string='End date')
     code = fields.Char(string='Номер', required=True)
-    partner_id = fields.Many2one('res.partner', string='Заказчик', required=True)
-    contractor_id = fields.Many2one('res.partner', string='Подрядчик', required=True)
-    estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Сметы')
-    rate = fields.Float(string='Курс')
-    amount = fields.Float(string='Сумма')
-    subject = fields.Char(string='Предмет договора')
-    attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
+    contractor_id = fields.Many2one('res.partner', string='Contractor', required=True)
+    estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Estimates')
+    rate = fields.Float(string='Rate')
+    amount = fields.Float(string='Amount')
+    subject = fields.Char(string='Subject')
     type = fields.Selection([('revenue', 'Выручка'),
                              ('expense', 'Затраты'),
                              ], 'Статус', readonly=True, default='revenue')
-    currency_id = fields.Many2one('res.currency', string='Валюта', required=True,
+    currency_id = fields.Many2one('res.currency', string='Currency', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
     state = fields.Selection([('draft', 'Черновик'),
                               ('signed', 'Подписан'),
@@ -38,7 +38,7 @@ class Contract(models.Model):
 class Project(models.Model):
     _inherit = 'bm.project'
 
-    contracts_ids = fields.One2many('project.project', 'bm_project_id', string='Договоры')
+    contracts_ids = fields.One2many('project.project', 'bm_project_id', string='Contracts')
 
 
 class Estimate(models.Model):
@@ -56,4 +56,4 @@ class Task(models.Model):
 class Report(models.Model):
     _inherit = 'bm.report'
 
-    bm_project_id = fields.Many2one(related='task_id.bm_project_id', string='Проект')
+    bm_project_id = fields.Many2one(related='task_id.bm_project_id', string='Project')
