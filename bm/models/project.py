@@ -21,7 +21,6 @@ class Project(models.Model):
     code = fields.Char(string='Шифр объекта')
     engineer_id = fields.Many2one('hr.employee', string='Инженер', required=True)
     foremen_ids = fields.Many2many('hr.employee', string='Прорабы', required=True)
-    contracts_ids = fields.One2many('bm.contract', 'bm_project_id', string='Договоры')
     attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
     state = fields.Selection([('tender', 'Тендер'),
                               ('in_work', 'В работе'),

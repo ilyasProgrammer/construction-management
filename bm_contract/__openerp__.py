@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Price update',
+    'name': 'BM Contract',
     'version': '1.1',
     'author': 'Ilyas',
-    'category': 'Accounting & Finance',
+    'category': '',
     'description': """ """,
     'website': '',
-    'depends': ['base_action_rule',
-                'product_margin',
-                ],
+    'depends': [
+        'bm',
+    ],
     'data': [
-        'rule.xml',
-        'views.xml',
     ],
     'qweb': [
     ],
@@ -20,6 +18,6 @@
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }

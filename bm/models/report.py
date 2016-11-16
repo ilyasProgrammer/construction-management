@@ -14,7 +14,6 @@ class Report(models.Model):
     date = fields.Datetime(string='Дата завершения', help='Дата подтверждения завершения задания прорабом')
     foremen_id = fields.Many2one('hr.employee', string='Прораб', required=True, domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
     task_id = fields.Many2one('project.task')
-    bm_project_id = fields.Many2one(related='task_id.bm_project_id', string='Проект')
     attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
     estimate_ids = fields.One2many('bm.report.lines', 'report_id', string='Расценки')
     state = fields.Selection([('draft', 'Черновик'),
