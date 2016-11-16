@@ -13,11 +13,10 @@ class Task(models.Model):
 
     code = fields.Char(string='Номер')
     date = fields.Datetime(string='Дата задания')
-    start = fields.Date(string='Дата начала работ', required=True)
-    finish = fields.Date(string='Дата окончания работ', required=True)
-    foremen_id = fields.Many2one('hr.employee', string='Прораб', required=True, domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
+    start = fields.Date(string='Дата начала работ')
+    finish = fields.Date(string='Дата окончания работ')
+    foremen_id = fields.Many2one('hr.employee', string='Прораб', domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
     engineer_id = fields.Many2one('hr.employee', string='Инженер')
-    bm_project_id = fields.Many2many(related='project_id.bm_project_id')
     estimate_ids = fields.One2many('project.task.lines', 'task_id', string='Расценки')
     # договор - это project_id в родной модели
     report_ids = fields.One2many('bm.report', 'task_id', string='Отчеты')

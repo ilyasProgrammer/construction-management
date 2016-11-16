@@ -33,3 +33,27 @@ class Contract(models.Model):
                               ('canceled', 'Отменен'),
                               ], 'Статус', readonly=True, default='draft')
     # tasks_ids - in parent model
+
+
+class Project(models.Model):
+    _inherit = 'bm.project'
+
+    contracts_ids = fields.One2many('project.project', 'bm_project_id', string='Договоры')
+
+
+class Estimate(models.Model):
+    _inherit = 'bm.estimate'
+
+    type = fields.Selection(related='contract_id.type')
+
+
+class Task(models.Model):
+    _inherit = 'project.task'
+
+    bm_project_id = fields.Many2one(related='project_id.bm_project_id')
+
+
+class Report(models.Model):
+    _inherit = 'bm.report'
+
+    bm_project_id = fields.Many2one(related='task_id.bm_project_id', string='Проект')

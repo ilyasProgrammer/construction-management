@@ -12,14 +12,13 @@ class Estimate(models.Model):
     _description = 'Смета'
 
     name = fields.Char(string='Название', required=True)
-    project_id = fields.Many2one('project', string='Проект')
-    contract_id = fields.Many2one('project', string='Договор')
+    project_id = fields.Many2one('bm.project', string='Проект')
+    contract_id = fields.Many2one('project.project', string='Договор')
     spj_id = fields.Many2one('bm.spj', string='ГПР')
     partner_id = fields.Many2one('res.partner', string='Заказчик', required=True)
     contractor_id = fields.Many2one('res.partner', string='Подрядчик', required=True)
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Расценки')
     attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
-    type = fields.Selection(related='contract_id.type')
     currency_id = fields.Many2one(related='contract_id.currency_id')
     overheads = fields.Float(string='Накладные расходы')
     comment = fields.Char(string='Комментарий')
