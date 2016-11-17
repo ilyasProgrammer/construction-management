@@ -8,8 +8,8 @@
     'description': """ """,
     'website': '',
     'depends': [
-        'project',
         'hr',
+        'project',
     ],
     'data': [
         'views/main.xml'

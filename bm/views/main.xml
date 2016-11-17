@@ -15,7 +15,6 @@
                 </p>
             </field>
         </record>
-
         <record id="wbs_search_view" model="ir.ui.view">
             <field name="name">bm.wbs.search</field>
             <field name="model">bm.wbs</field>
@@ -119,17 +118,21 @@
                             </h1>
                         </div>
                         <div class="oe_row">
-                            <h1>
+                            <h2>
                                 <field name="full_name" placeholder="Full name"/>
-                            </h1>
+                            </h2>
                         </div>
                         <notebook>
-                            <page string="Data">
+                            <page string="Basic data">
                                 <group name="group_alias" colspan="2" col="2">
                                     <group>
+                                        <field name="wbs_id"/>
                                         <field name="engineer_id"/>
                                     </group>
-                                    <group></group>
+                                    <group>
+                                        <field name="code"/>
+                                        <field name="address"/>
+                                    </group>
                                 </group>
                                 <field name="foremen_ids" nolabel="1"/>
                             </page>
@@ -138,7 +141,6 @@
                 </form>
             </field>
         </record>
-
         <menuitem action="project_act" id="bm_action_project" name="Project" parent="bm_menu_left"/>
     </data>
 </openerp>

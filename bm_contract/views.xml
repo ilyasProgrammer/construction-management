@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="project_project_form_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//sheet" position="replace">
+                    <sheet string="Project">
+                    <div class="oe_button_box" name="button_box" groups="base.group_user">
+                         <button class="oe_stat_button" type="action"
+                            name="%(project.act_project_project_2_project_task_all)d" icon="fa-tasks">
+                            <field string="Tasks" name="task_count" widget="statinfo" options="{'label_field': 'label_tasks'}"/>
+                        </button>
+                        <button  class="oe_stat_button" name="attachment_tree_view"  type="object" icon="fa-files-o">
+                            <field string="Documents" name="doc_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Project Name"/>
+                        </h1>
+                    </div>
+                        <notebook>
+                            <page string="Settings">
+                                <group>
+                                    <group>
+                                        <field name="bm_project_id"/>
+                                        <field name="currency_id"/>
+                                        <field name="type"/>
+                                        <field name="amount"/>
+                                        <field name="subject"/>
+                                        <field name="rate"/>
+                                    </group>
+                                    <group>
+                                        <field name="contractor_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="code"/>
+                                        <field name="finish"/>
+                                        <field name="start"/>
+                                        <field name="date"/>
+                                    </group>
+                                </group>
+                                <h2>Foremen</h2>
+                                <field name="foremen_ids" nolabel="1"/>
+                            </page>
+                        </notebook>
+                </sheet>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+    </record>
+    <record id="project.open_view_project_all" model="ir.ui.menu">
+        <field name="name">Contracts</field>
+    </record>
+</data>
+</openerp>

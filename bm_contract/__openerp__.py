@@ -8,9 +8,11 @@
     'description': """ """,
     'website': '',
     'depends': [
+        'hr',
         'bm',
     ],
     'data': [
+        'views.xml',
     ],
     'qweb': [
     ],
