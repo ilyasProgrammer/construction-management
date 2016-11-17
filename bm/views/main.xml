@@ -358,6 +358,6 @@
                 </p>
             </field>
         </record>
-        <menuitem action="pricing_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left" sequence="7"/>
+        <menuitem action="pricing_act" id="bm_action_estimate" name="Pricings" parent="bm.bm_menu_left" sequence="7"/>
     </data>
 </openerp>
