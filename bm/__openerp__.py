@@ -12,7 +12,8 @@
         'project',
     ],
     'data': [
-        'views/main.xml'
+        'views/main.xml',
+        'data/records.xml',
     ],
     'qweb': [
     ],

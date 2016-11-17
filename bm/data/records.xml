@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record model="project.task.type" id="t1">
+        <field name="sequence">1</field>
+        <field name="name">Draft</field>
+    </record>
+    <record model="project.task.type" id="t2">
+        <field name="sequence">2</field>
+        <field name="name">Wait begin</field>
+    </record>
+    <record model="project.task.type" id="t3">
+        <field name="sequence">3</field>
+        <field name="name">In work</field>
+    </record>
+    <record model="project.task.type" id="t4">
+        <field name="sequence">4</field>
+        <field name="name">Wait decision</field>
+    </record>
+    <record model="project.task.type" id="t5">
+        <field name="sequence">5</field>
+        <field name="name">Done</field>
+    </record>
+    <record model="project.task.type" id="t6">
+        <field name="sequence">6</field>
+        <field name="name">Canceled</field>
+    </record>
+</data>
+</openerp>

@@ -60,6 +60,7 @@
             </data>
         </field>
     </record>
+    <menuitem id="project.menu_projects" name="Contracts" parent="bm.bm_menu_left" sequence="3"/>
     <!--Task-->
     <record id="wb_contract_project_task_form_inherit" model="ir.ui.view">
         <field name="name">project.task.form.inherit</field>

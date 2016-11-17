@@ -68,7 +68,7 @@
             <field name="search_view_id" ref="wbs_search_view"/>
             <field name="view_id" ref="wbs_list_view"/>
         </record>
-        <menuitem action="wbs_act" id="bm_action_wbs" name="WBS" parent="bm_menu_left"/>
+        <menuitem action="wbs_act" id="bm_action_wbs" name="WBS" parent="bm_menu_left" sequence="1"/>
         <!--Project-->
         <record id="project_act" model="ir.actions.act_window">
             <field name="name">Project</field>
@@ -141,7 +141,7 @@
                 </form>
             </field>
         </record>
-        <menuitem action="project_act" id="bm_action_project" name="Project" parent="bm_menu_left"/>
+        <menuitem action="project_act" id="bm_action_project" name="Project" parent="bm_menu_left" sequence="2"/>
         <!--Task-->
         <record id="wb_project_task_form_inherit" model="ir.ui.view">
             <field name="name">project.task.form.inherit</field>
@@ -174,5 +174,6 @@
                 </data>
             </field>
         </record>
+        <menuitem action="project.action_view_task" id="bm_action_contract" name="Tasks" parent="bm.bm_menu_left" sequence="4"/>
     </data>
 </openerp>
