@@ -19,14 +19,6 @@ class Task(models.Model):
     estimate_ids = fields.One2many('project.task.lines', 'task_id', string='Estimates')
     # договор - это project_id в родной модели
     report_ids = fields.One2many('bm.report', 'task_id', string='Reports')
-    # TODO надо создать рекорды для модели project.task.type (state_id)
-    # state = fields.Selection([('draft', 'Черновик'),
-    #                           ('wait_begin', 'Ожидает начала работ'),
-    #                           ('in_work', 'В работе'),
-    #                           ('wait_decision', 'Ожидает решения инженера'),
-    #                           ('done', 'Завершено'),
-    #                           ('canceled', 'Отменено'),
-    #                           ], 'Статус', readonly=True, default='draft')
 
 
 class TaskLines(models.Model):

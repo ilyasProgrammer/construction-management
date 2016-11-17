@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from openerp import api, models, fields
+from openerp import api, models, fields, _
 
 
 _logger = logging.getLogger(__name__)
@@ -9,27 +9,49 @@ _logger = logging.getLogger(__name__)
 
 class Estimate(models.Model):
     _name = 'bm.estimate'
-    _description = 'Смета'
+    _description = 'Estimate'
 
-    name = fields.Char(string='Название', required=True)
-    project_id = fields.Many2one('bm.project', string='Проект')
-    contract_id = fields.Many2one('project.project', string='Договор')
-    spj_id = fields.Many2one('bm.spj', string='ГПР')
-    partner_id = fields.Many2one('res.partner', string='Заказчик', required=True)
-    contractor_id = fields.Many2one('res.partner', string='Подрядчик', required=True)
-    pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Расценки')
-    attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
+    name = fields.Char(string='Name', required=True)
+    project_id = fields.Many2one('bm.project', string='Project')
+    contract_id = fields.Many2one('project.project', string='Contract')
+    spj_id = fields.Many2one('bm.spj', string='SPJ')
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
+    contractor_id = fields.Many2one('res.partner', string='Contractor', required=True)
+    pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Pricings')
     currency_id = fields.Many2one(related='contract_id.currency_id')
-    overheads = fields.Float(string='Накладные расходы')
-    comment = fields.Char(string='Комментарий')
+    overheads = fields.Float(string='Overheads')
+    comment = fields.Char(string='Comment')
+    attachment_ids = fields.One2many('ir.attachment', 'res_id',
+                                     domain=[('res_model', '=', 'bm.estimate')],
+                                     string='Attachments')
+    attachment_number = fields.Integer(compute='_get_attachment_number', string="Number of Attachments")
+
+    @api.multi
+    def action_get_attachment_tree_view(self):
+        action = self.env.ref('base.action_attachment').read()[0]
+        action['context'] = {
+            'default_res_model': self._name,
+            'default_res_id': self.ids[0]
+        }
+        action['domain'] = ['&', ('res_model', '=', 'bm.estimate'), ('res_id', 'in', self.ids)]
+        return action
+
+    @api.multi
+    def _get_attachment_number(self):
+        read_group_res = self.env['ir.attachment'].read_group(
+            [('res_model', '=', 'bm.estimate'), ('res_id', 'in', self.ids)],
+            ['res_id'], ['res_id'])
+        attach_data = dict((res['res_id'], res['res_id_count']) for res in read_group_res)
+        for record in self:
+            record.attachment_number = attach_data.get(record.id, 0)
 
 
 class EstimateLines(models.Model):
     _name = 'bm.estimate.lines'
-    _description = 'Строки расценок в смете'
+    _description = 'Estimates lines'
 
     estimate_id = fields.Many2one('bm.estimate')
-    pricing_id = fields.Many2one('bm.pricing', string='Расценка')
-    labor = fields.Float(string='Трудозатраты')
-    mech = fields.Float(string='Механические часы')
-    est_cost = fields.Float(string='Сметная стоимость')
+    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
+    labor = fields.Float(string='Labor')
+    mech = fields.Float(string='Mechanical hours')
+    est_cost = fields.Float(string='Estimate cost')

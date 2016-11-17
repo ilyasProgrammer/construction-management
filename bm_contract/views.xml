@@ -9,6 +9,7 @@
     </record>
 </data>
 <data>
+    <!--Contract-->
     <record id="project_project_form_inherit" model="ir.ui.view">
         <field name="name">project.project.form.inherit</field>
         <field name="model">project.project</field>
@@ -60,7 +61,16 @@
             </data>
         </field>
     </record>
-    <menuitem id="project.menu_projects" name="Contracts" parent="bm.bm_menu_left" sequence="3"/>
+    <record id="bm_open_view_project_all" model="ir.actions.act_window">
+            <field name="name">Contracts</field>
+            <field name="res_model">project.project</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_Current': 1}</field>
+        </record>
+    <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Contracts" parent="bm.bm_menu_left" sequence="3"/>
     <!--Task-->
     <record id="wb_contract_project_task_form_inherit" model="ir.ui.view">
         <field name="name">project.task.form.inherit</field>
