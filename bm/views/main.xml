@@ -358,6 +358,61 @@
                 </p>
             </field>
         </record>
-        <menuitem action="pricing_act" id="bm_action_estimate" name="Pricings" parent="bm.bm_menu_left" sequence="7"/>
+        <menuitem action="pricing_act" id="bm_action_pricing" name="Pricings" parent="bm.bm_menu_left" sequence="7"/>
+        <!--SPJ-->
+        <record id="view_spj_form" model="ir.ui.view">
+            <field name="name">bm.spj.form</field>
+            <field name="model">bm.spj</field>
+            <field name="arch" type="xml">
+                <form string="SPJ">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet string="SPJ">
+                        <group name="group_alias" colspan="2" col="2">
+                            <group>
+                                <field name="project_local_id"/>
+                                <field name="project_external_id"/>
+                                <field name="currency_id"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="amount_labor"/>
+                                <field name="amount_mech"/>
+                                <field name="amount_est_cost"/>
+                            </group>
+                        </group>
+                        <label for="estimate_ids" string="Estimates" class="oe_edit_only"/>
+                        <field name="estimate_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_spj_tree" model="ir.ui.view">
+            <field name="name">bm.spj.tree</field>
+            <field name="model">bm.spj</field>
+            <field name="arch" type="xml">
+                <tree string="SPJ">
+                    <field name="project_local_id"/>
+                    <field name="project_external_id"/>
+                    <field name="currency_id"/>
+                    <field name="type"/>
+                    <field name="amount_labor"/>
+                    <field name="amount_mech"/>
+                    <field name="amount_est_cost"/>
+                </tree>
+            </field>
+        </record>
+        <record id="spj_act" model="ir.actions.act_window">
+            <field name="name">SPJs</field>
+            <field name="res_model">bm.spj</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new SPJ
+                </p>
+            </field>
+        </record>
+        <menuitem action="spj_act" id="bm_action_spj" name="SPJs" parent="bm.bm_menu_left" sequence="8"/>
     </data>
 </openerp>
