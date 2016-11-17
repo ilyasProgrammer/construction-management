@@ -308,5 +308,56 @@
             </field>
         </record>
         <menuitem action="estimate_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left" sequence="6"/>
+        <!--Prising-->
+        <record id="view_pricing_form" model="ir.ui.view">
+            <field name="name">bm.pricing.form</field>
+            <field name="model">bm.pricing</field>
+            <field name="arch" type="xml">
+                <form string="Pricing">
+                    <sheet string="Pricing">
+                        <group name="group_alias" colspan="2" col="2">
+                            <group>
+                                <field name="code"/>
+                                <field name="job"/>
+                                <field name="pricing_uom"/>
+                            </group>
+                            <group>
+                                <field name="labor"/>
+                                <field name="mech"/>
+                                <field name="est_cost"/>
+                            </group>
+                        </group>
+                        <label for="rationale" string="Rationale" class="oe_edit_only"/>
+                        <field name="rationale"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_pricing_tree" model="ir.ui.view">
+            <field name="name">bm.pricing.tree</field>
+            <field name="model">bm.pricing</field>
+            <field name="arch" type="xml">
+                <tree string="Pricing">
+                    <field name="code"/>
+                    <field name="job"/>
+                    <field name="pricing_uom"/>
+                    <field name="labor"/>
+                    <field name="mech"/>
+                    <field name="est_cost"/>
+                    <field name="rationale"/>
+                </tree>
+            </field>
+        </record>
+        <record id="pricing_act" model="ir.actions.act_window">
+            <field name="name">Pricings</field>
+            <field name="res_model">bm.pricing</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new Pricing
+                </p>
+            </field>
+        </record>
+        <menuitem action="pricing_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left" sequence="7"/>
     </data>
 </openerp>
