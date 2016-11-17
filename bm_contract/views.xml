@@ -46,7 +46,7 @@
                         </h1>
                     </div>
                         <notebook>
-                            <page string="Settings">
+                            <page string="Basic data">
                                 <group>
                                     <group>
                                         <field name="bm_project_id"/>
@@ -66,24 +66,74 @@
                                     </group>
                                 </group>
                                 <h2>Foremen</h2>
-                                <field name="foremen_ids" nolabel="1"/>
+                                <field name="foremen_ids" nolabel="1" widget="many2many_list">
+                                    <tree string="Foremen">
+                                        <field name="name"/>
+                                        <field name="job_id"/>
+                                        <field name="work_phone"/>
+                                        <field name="department_id"/>
+                                    </tree>
+                                </field>
                             </page>
                         </notebook>
-                </sheet>
+                    </sheet>
                 </xpath>
             </data>
         </field>
     </record>
+    <record id="project_project_tree" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="type"/>
+                    <field name="bm_project_id"/>
+                    <field name="partner_id"/>
+                    <field name="contractor_id"/>
+                </tree>
+            </field>
+        </record>
+
     <record id="bm_open_view_project_all" model="ir.actions.act_window">
-            <field name="name">Contracts</field>
+            <field name="name">Contract</field>
             <field name="res_model">project.project</field>
             <field name="view_type">form</field>
             <field name="domain">[]</field>
-            <field name="view_mode">kanban,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="project.view_project_project_filter"/>
-            <field name="context">{'search_default_Current': 1}</field>
+            <field name="context">{}</field>
         </record>
     <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Contracts" parent="bm.bm_menu_left" sequence="3"/>
+    <!--Project-->
+    <record id="wb_contract_bm_project_form_inherit" model="ir.ui.view">
+        <field name="name">bm.project.form.inherit</field>
+        <field name="model">bm.project</field>
+        <field name="inherit_id" ref="bm.view_project_form"/>
+        <field name="priority" eval="60" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='foremen_ids']" position="after">
+                    <group></group>
+                    <h2></h2>
+                    <h2>Contracts</h2>
+                    <field name="contracts_ids" nolabel="1" widget="many2many_list">
+                        <tree string="Contracts">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="bm_project_id"/>
+                            <field name="date"/>
+                            <field name="state"/>
+                            <field name="partner_id"/>
+                            <field name="contractor_id"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </data>
+        </field>
+    </record>
     <!--Task-->
     <record id="wb_contract_project_task_form_inherit" model="ir.ui.view">
         <field name="name">project.task.form.inherit</field>
@@ -98,5 +148,33 @@
             </data>
         </field>
     </record>
+    <!--Estimate-->
+    <record id="wb_contract_estimate_form_inherit" model="ir.ui.view">
+        <field name="name">bm.estimate.form.inherit</field>
+        <field name="model">bm.estimate</field>
+        <field name="inherit_id" ref="bm.view_estimate_form"/>
+        <field name="priority" eval="60" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='currency_id']" position="before">
+                    <field name="contractor_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="wb_contract_estimate_tree_inherit" model="ir.ui.view">
+        <field name="name">bm.estimate.tree.inherit</field>
+        <field name="model">bm.estimate</field>
+        <field name="inherit_id" ref="bm.view_estimate_tree"/>
+        <field name="priority" eval="60" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='currency_id']" position="before">
+                    <field name="contractor_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
 </data>
 </openerp>

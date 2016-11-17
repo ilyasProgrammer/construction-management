@@ -45,6 +45,8 @@ class Estimate(models.Model):
     _inherit = 'bm.estimate'
 
     type = fields.Selection(related='contract_id.type')
+    partner_id = fields.Many2one(related='contract_id.partner_id')
+    contractor_id = fields.Many2one(related='contract_id.contractor_id')
 
 
 class Task(models.Model):

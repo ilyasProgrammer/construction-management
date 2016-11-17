@@ -11,14 +11,21 @@ class Task(models.Model):
     _inherit = 'project.task'
     _description = 'Task'
 
+    @api.model
+    def _get_stage(self):
+        stage_id = self.env['project.task.type'].search([('name','=','Draft')])[0]
+        return stage_id
+
     code = fields.Char(string='Number')
     date = fields.Datetime(string='Task date')
+    stage_id = fields.Many2one('project.task.type', 'Stage', select=True, copy=False, default=_get_stage)
     start = fields.Date(string='Start date')
     finish = fields.Date(string='Finish date')
     engineer_id = fields.Many2one('hr.employee', string='Engineer')
     estimate_ids = fields.One2many('project.task.lines', 'task_id', string='Estimates')
     # договор - это project_id в родной модели
     report_ids = fields.One2many('bm.report', 'task_id', string='Reports')
+
 
 
 class TaskLines(models.Model):

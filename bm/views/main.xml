@@ -30,23 +30,25 @@
             <field name="model">bm.wbs</field>
             <field name="arch" type="xml">
                 <form class="oe_form_configuration">
-                    <div class="oe_title">
-                        <label for="name" string="Name" class="oe_edit_only"/>
-                        <h1 class="o_row">
-                            <field name="name" placeholder="e.g. Lamps"/>
-                        </h1>
-                    </div>
-                    <group name="first" col="4">
-                        <group>
-                            <field name="code"/>
-                            <field name="parent_id"/>
+                    <sheet string="WBS">
+                        <div class="oe_title">
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <h1 class="o_row">
+                                <field name="name" placeholder="e.g. Lamps"/>
+                            </h1>
+                        </div>
+                        <group name="first" col="4">
+                            <group>
+                                <field name="code"/>
+                                <field name="parent_id"/>
+                            </group>
+                            <group></group>
                         </group>
-                        <group></group>
-                    </group>
-                    <div class="oe_clear"/>
-                    <h2>Description</h2>
-                    <field name="description" type="html"/>
-                    <div class="oe_clear"/>
+                        <div class="oe_clear"/>
+                        <h2>Description</h2>
+                        <field name="description"/>
+                        <div class="oe_clear"/>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -57,6 +59,8 @@
             <field name="arch" type="xml">
                 <tree string="WBS">
                     <field name="complete_name"/>
+                    <field name="code"/>
+                    <field name="description"/>
                 </tree>
             </field>
         </record>
@@ -70,33 +74,6 @@
         </record>
         <menuitem action="wbs_act" id="bm_action_wbs" name="WBS" parent="bm_menu_left" sequence="1"/>
         <!--Project-->
-        <record id="project_act" model="ir.actions.act_window">
-            <field name="name">Project</field>
-            <field name="res_model">bm.project</field>
-            <field name="view_mode">tree,form</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Here, you can create new Project
-                </p>
-            </field>
-        </record>
-        <record id="view_project_tree" model="ir.ui.view">
-            <field name="name">bm.project.tree</field>
-            <field name="model">bm.project</field>
-            <field name="arch" type="xml">
-                <tree string="Project">
-                    <field name="wbs_id"/>
-                    <field name="full_name"/>
-                    <field name="name"/>
-                    <field name="address"/>
-                    <field name="code"/>
-                    <field name="engineer_id"/>
-                    <field name="foremen_ids"/>
-                    <field name="attachment_ids"/>
-                    <field name="state"/>
-                </tree>
-            </field>
-        </record>
         <record id="view_project_form" model="ir.ui.view">
             <field name="name">bm.project.form</field>
             <field name="model">bm.project</field>
@@ -136,11 +113,46 @@
                                         <field name="address"/>
                                     </group>
                                 </group>
-                                <field name="foremen_ids" nolabel="1"/>
+                                <h2>Foremen</h2>
+                                <field name="foremen_ids" nolabel="1" widget="many2many_list">
+                                    <tree string="Foremen">
+                                        <field name="name"/>
+                                        <field name="job_id"/>
+                                        <field name="work_phone"/>
+                                        <field name="department_id"/>
+                                    </tree>
+                                </field>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+        <record id="view_project_tree" model="ir.ui.view">
+            <field name="name">bm.project.tree</field>
+            <field name="model">bm.project</field>
+            <field name="arch" type="xml">
+                <tree string="Project">
+                    <field name="wbs_id"/>
+                    <field name="full_name"/>
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="code"/>
+                    <field name="engineer_id"/>
+                    <field name="foremen_ids"/>
+                    <field name="attachment_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="project_act" model="ir.actions.act_window">
+            <field name="name">Project</field>
+            <field name="res_model">bm.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new Project
+                </p>
             </field>
         </record>
         <menuitem action="project_act" id="bm_action_project" name="Projects" parent="bm_menu_left" sequence="2"/>
@@ -270,7 +282,6 @@
                                         <field name="partner_id"/>
                                     </group>
                                     <group>
-                                        <field name="contractor_id"/>
                                         <field name="currency_id"/>
                                         <field name="overheads"/>
                                         <field name="comment"/>
@@ -300,7 +311,6 @@
                     <field name="contract_id"/>
                     <field name="spj_id"/>
                     <field name="partner_id"/>
-                    <field name="contractor_id"/>
                     <field name="currency_id"/>
                 </tree>
             </field>

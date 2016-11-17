@@ -14,5 +14,5 @@ class WBS(models.Model):
 
     code = fields.Char(string='Code')
     name = fields.Char(string='Name', required=True)
-    description = fields.Html(string='Description', required=True)
+    description = fields.Text(string='Description', required=True)
     parent_id = fields.Many2one('bm.wbs', 'Parent Category', select=True, ondelete='cascade')
