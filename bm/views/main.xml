@@ -142,5 +142,37 @@
             </field>
         </record>
         <menuitem action="project_act" id="bm_action_project" name="Project" parent="bm_menu_left"/>
+        <!--Task-->
+        <record id="wb_project_task_form_inherit" model="ir.ui.view">
+            <field name="name">project.task.form.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook//page[1]" position="before">
+                        <page name="main_data" string="Basic data">
+                            <group>
+                            <group id="g1">
+                                <field name="code"/>
+                                <field name="date"/>
+                                <field name="start"/>
+                            </group>
+                            <group id="g2">
+                                <field name="finish"/>
+                                <field name="engineer_id"/>
+                            </group>
+                            </group>
+                        </page>
+                        <page name="est_page" string="Estimate">
+                            <field name="estimate_ids"/>
+                        </page>
+                        <page name="reports_page" string="Reports">
+                            <field name="report_ids"/>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
     </data>
 </openerp>

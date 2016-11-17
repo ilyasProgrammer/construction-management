@@ -9,13 +9,13 @@ _logger = logging.getLogger(__name__)
 
 class Report(models.Model):
     _name = 'bm.report'
-    _description = 'Отчет о работе'
+    _description = 'Job report'
 
-    date = fields.Datetime(string='Дата завершения', help='Дата подтверждения завершения задания прорабом')
-    foremen_id = fields.Many2one('hr.employee', string='Прораб', required=True, domain=lambda self: [('id', 'in', self.project_id.foremen_ids)])
+    date = fields.Datetime(string='End date', help='Дата подтверждения завершения задания прорабом')
+    foremen_id = fields.Many2one('hr.employee', string='Foreman', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
     task_id = fields.Many2one('project.task')
-    attachment_ids = fields.Many2many('ir.attachment', string='Вложения')
-    estimate_ids = fields.One2many('bm.report.lines', 'report_id', string='Расценки')
+    attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    estimate_ids = fields.One2many('bm.report.lines', 'report_id', string='Estimates')
     state = fields.Selection([('draft', 'Черновик'),
                               ('sent', 'Отправлено'),
                               ('approved', 'Утверждено'),
@@ -25,10 +25,10 @@ class Report(models.Model):
 
 class ReportLines(models.Model):
     _name = 'bm.report.lines'
-    _description = 'Строка отчета (расценка)'
+    _description = 'Report line (estimate)'
 
     report_id = fields.Many2one('bm.report')
-    pricing_id = fields.Many2one('bm.pricing', string='Расценка')
-    labor = fields.Float(string='Трудозатраты')
-    mech = fields.Float(string='Механические часы')
-    est_cost = fields.Float(string='Сметная стоимость')
+    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
+    labor = fields.Float(string='Labor')
+    mech = fields.Float(string='Mechanical hours')
+    est_cost = fields.Float(string='Estimate cost')

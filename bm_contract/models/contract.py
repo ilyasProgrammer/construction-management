@@ -51,6 +51,7 @@ class Task(models.Model):
     _inherit = 'project.task'
 
     bm_project_id = fields.Many2one(related='project_id.bm_project_id')
+    foremen_id = fields.Many2one('hr.employee', string='Foreman')  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
 
 
 class Report(models.Model):
