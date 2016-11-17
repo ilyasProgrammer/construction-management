@@ -276,7 +276,15 @@
                                         <field name="comment"/>
                                     </group>
                                 </group>
-                                <field name="pricing_ids"/>
+                                <field name="pricing_ids" widget="one2many_list"
+                                       context="{'pricing_ids': pricing_ids,}">
+                                    <tree editable="bottom" string="Pricing Items">
+                                        <field name="pricing_id"/>
+                                        <field name="labor"/>
+                                        <field name="mech"/>
+                                        <field name="est_cost"/>
+                                    </tree>
+                                </field>
                             </page>
                         </notebook>
                     </sheet>
@@ -318,7 +326,7 @@
                         <group name="group_alias" colspan="2" col="2">
                             <group>
                                 <field name="code"/>
-                                <field name="job"/>
+                                <field name="name"/>
                                 <field name="pricing_uom"/>
                             </group>
                             <group>
@@ -339,7 +347,7 @@
             <field name="arch" type="xml">
                 <tree string="Pricing">
                     <field name="code"/>
-                    <field name="job"/>
+                    <field name="name"/>
                     <field name="pricing_uom"/>
                     <field name="labor"/>
                     <field name="mech"/>
