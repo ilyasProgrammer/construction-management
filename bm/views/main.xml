@@ -166,7 +166,7 @@
                         <page name="main_data" string="Basic data">
                             <group>
                                 <group id="g1">
-                                    <field name="project_id" string="Contract"/>
+                                    <field name="project_id" string="Договор"/>
                                     <field name="start"/>
                                     <field name="finish"/>
                                 </group>
@@ -175,7 +175,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page name="est_page" string="Pricings">
+                        <page name="est_page" string="Расценки">
                             <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
                                 <tree editable="bottom" string="Pricing Items">
                                     <field name="pricing_id"/>
@@ -188,7 +188,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page name="reports_page" string="Reports">
+                        <page name="reports_page" string="Отчеты">
                             <field name="report_ids"  context="{'task_id': id,'foreman_id': foreman_id,}"/>
                         </page>
                     </xpath>
@@ -442,7 +442,7 @@
                             </group>
                         </group>
                         <label for="estimate_ids" string="Estimates" class="oe_edit_only"/>
-                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,}"/>
+                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,'project_id': project_id,}"/>
                     </sheet>
                 </form>
             </field>

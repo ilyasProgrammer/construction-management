@@ -12,11 +12,11 @@ class Estimate(models.Model):
     _description = 'Estimate'
 
     name = fields.Char(string='Name', required=True)
-    project_id = fields.Many2one('bm.project', string='Project')
-    contract_id = fields.Many2one('project.project', string='Contract')
+    project_id = fields.Many2one('bm.project', string='Проект')
+    contract_id = fields.Many2one('project.project', string='Договор')
     spj_id = fields.Many2one('bm.spj', string='ГПР')
     partner_id = fields.Many2one(related='contract_id.partner_id')
-    pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Pricings')
+    pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Расценки')
     currency_id = fields.Many2one(related='contract_id.currency_id')
     overheads = fields.Float(string='Overheads', default=0)
     amount = fields.Float(string='Estimated cost', readonly=True, default=0)
@@ -64,14 +64,17 @@ class Estimate(models.Model):
         res = super(Estimate, self).default_get(fields)
         if self._context.get('spj_id', False):
             res['spj_id'] = self._context['spj_id']
+        if self._context.get('project_id', False):
+            res['project_id'] = self._context['project_id']
         return res
+
 
 class EstimateLines(models.Model):
     _name = 'bm.estimate.lines'
     _description = 'Estimates lines'
 
     estimate_id = fields.Many2one('bm.estimate')
-    pricing_id = fields.Many2one('bm.pricing', string='Estimate', required=True)
+    pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
     name = fields.Char(related='pricing_id.name', readonly=True)
     rationale = fields.Char(related='pricing_id.rationale', readonly=True)
