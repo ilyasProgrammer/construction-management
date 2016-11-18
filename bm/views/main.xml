@@ -291,9 +291,13 @@
                                        context="{'pricing_ids': pricing_ids,}">
                                     <tree editable="bottom" string="Pricing Items">
                                         <field name="pricing_id"/>
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="pricing_uom"/>
                                         <field name="labor"/>
                                         <field name="mech"/>
                                         <field name="est_cost"/>
+                                        <field name="rationale"/>
                                     </tree>
                                 </field>
                             </page>

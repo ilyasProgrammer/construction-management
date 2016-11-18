@@ -50,7 +50,20 @@ class EstimateLines(models.Model):
     _description = 'Estimates lines'
 
     estimate_id = fields.Many2one('bm.estimate')
-    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
+    pricing_id = fields.Many2one('bm.pricing', string='Estimate', required=True)
+    code = fields.Char(related='pricing_id.code', readonly=True)
+    name = fields.Char(related='pricing_id.name', readonly=True)
+    rationale = fields.Char(related='pricing_id.rationale', readonly=True)
+    pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     labor = fields.Float(string='Labor')
-    mech = fields.Float(string='Mechanical hours')
+    mech = fields.Float(string='Mech. hours')
     est_cost = fields.Float(string='Estimate cost')
+
+    @api.v8
+    @api.onchange('pricing_id')
+    def on_change_pricing_id(self):
+        if not self.pricing_id:
+            return {}
+        self.labor = self.pricing_id.labor
+        self.mech = self.pricing_id.mech
+        self.est_cost = self.pricing_id.est_cost
