@@ -56,8 +56,8 @@ class EstimateLines(models.Model):
     rationale = fields.Char(related='pricing_id.rationale', readonly=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     labor = fields.Float(string='Labor')
-    mech = fields.Float(string='Mech. hours')
-    est_cost = fields.Float(string='Estimate cost')
+    mech = fields.Float(string='Mech.')
+    est_cost = fields.Float(string='Est. cost')
 
     @api.v8
     @api.onchange('pricing_id')

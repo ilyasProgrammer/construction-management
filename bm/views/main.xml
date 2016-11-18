@@ -155,40 +155,70 @@
                 </p>
             </field>
         </record>
-        <menuitem action="project_act" id="bm_action_project" name="Projects" parent="bm_menu_left" sequence="2"/>
+        <menuitem action="project_act" id="bm_action_project" name="Projects" parent="bm_menu_left"
+                  sequence="2"/>
         <!--Task-->
         <record id="wb_project_task_form_inherit" model="ir.ui.view">
             <field name="name">project.task.form.inherit</field>
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2"/>
-            <field name="priority" eval="20" />
+            <field name="priority" eval="20"/>
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//notebook//page[1]" position="before">
                         <page name="main_data" string="Basic data">
                             <group>
-                            <group id="g1">
-                                <field name="code"/>
-                                <field name="date"/>
-                                <field name="start"/>
-                            </group>
-                            <group id="g2">
-                                <field name="finish"/>
-                                <field name="engineer_id"/>
-                            </group>
+                                <group id="g1">
+                                    <field name="project_id"/>
+                                    <field name="start"/>
+                                    <field name="finish"/>
+                                </group>
+                                <group id="g2">
+                                    <field name="engineer_id"/>
+                                </group>
                             </group>
                         </page>
-                        <page name="est_page" string="Estimate">
-                            <field name="estimate_ids"/>
+                        <page name="est_page" string="Pricings">
+                            <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
+                                <tree editable="bottom" string="Pricing Items">
+                                    <field name="pricing_id"/>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="labor"/>
+                                    <field name="mech"/>
+                                    <field name="est_cost"/>
+                                    <field name="rationale"/>
+                                </tree>
+                            </field>
                         </page>
                         <page name="reports_page" string="Reports">
-                            <field name="report_ids"/>
+                            <field name="report_ids"  context="{'task_id': id,'foreman_id': foreman_id,}"/>
                         </page>
+                    </xpath>
+                    <xpath expr="//field[@name='kanban_state']" position="replace">
+                        <div class="oe_clear"/>
+                    </xpath>
+                    <xpath expr="//div[@name='button_box']" position="replace">
+                        <div class="oe_clear"/>
+                    </xpath>
+                    <xpath expr="//field[@name='user_id']/../.." position="replace">
+                        <div class="oe_clear"/>
+                    </xpath>
+                    <xpath expr="//field[@name='priority']/../.." position="replace">
+                        <group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="date" string="от"/>
+                            </group>
+                        </group>
                     </xpath>
                 </data>
             </field>
         </record>
-        <menuitem action="project.action_view_task" id="bm_action_contract" name="Tasks" parent="bm.bm_menu_left" sequence="4"/>
+        <menuitem action="project.action_view_task" id="bm_action_contract" name="Tasks"
+                  parent="bm.bm_menu_left" sequence="4"/>
         <!--Report-->
         <record id="view_report_form" model="ir.ui.view">
             <field name="name">bm.report.form</field>
@@ -212,19 +242,25 @@
                                 <field name="task_id" placeholder="Task"/>
                             </h1>
                         </div>
-                        <notebook>
-                            <page string="Basic data">
-                                <group name="group_alias" colspan="2" col="2">
-                                    <group>
-                                        <field name="foremen_id"/>
-                                        <field name="date"/>
-                                    </group>
-                                    <group>
-                                    </group>
-                                </group>
-                                <field name="estimate_ids" nolabel="1"/>
-                            </page>
-                        </notebook>
+                        <group name="group_alias" colspan="2" col="2">
+                            <group>
+                                <field name="foreman_id"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <field name="lines_ids" widget="one2many_list" context="{'report_id': id,}">
+                            <tree editable="bottom" string="Pricing Items">
+                                <field name="pricing_id"/>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="labor"/>
+                                <field name="mech"/>
+                                <field name="est_cost"/>
+                                <field name="rationale"/>
+                            </tree>
+                        </field>
                     </sheet>
                 </form>
             </field>
@@ -234,10 +270,10 @@
             <field name="model">bm.report</field>
             <field name="arch" type="xml">
                 <tree string="Report">
+                    <field name="task_id"/>
+                    <field name="foreman_id"/>
                     <field name="date"/>
                     <field name="state"/>
-                    <field name="task_id"/>
-                    <field name="foremen_id"/>
                 </tree>
             </field>
         </record>
@@ -251,7 +287,8 @@
                 </p>
             </field>
         </record>
-        <menuitem action="report_act" id="bm_action_report" name="Reports" parent="bm.bm_menu_left" sequence="5"/>
+        <menuitem action="report_act" id="bm_action_report" name="Reports" parent="bm.bm_menu_left"
+                  sequence="5"/>
         <!--Estimate-->
         <record id="view_estimate_form" model="ir.ui.view">
             <field name="name">bm.estimate.form</field>
@@ -272,36 +309,32 @@
                                 <field name="name" placeholder="Estimate name"/>
                             </h1>
                         </div>
-                        <notebook>
-                            <page string="Basic data">
-                                <group name="group_alias" colspan="2" col="2">
-                                    <group>
-                                        <field name="project_id"/>
-                                        <field name="contract_id"/>
-                                        <field name="spj_id"/>
-                                        <field name="partner_id"/>
-                                    </group>
-                                    <group>
-                                        <field name="currency_id"/>
-                                        <field name="overheads"/>
-                                        <field name="comment"/>
-                                    </group>
-                                </group>
-                                <field name="pricing_ids" widget="one2many_list"
-                                       context="{'pricing_ids': pricing_ids,}">
-                                    <tree editable="bottom" string="Pricing Items">
-                                        <field name="pricing_id"/>
-                                        <field name="code"/>
-                                        <field name="name"/>
-                                        <field name="pricing_uom"/>
-                                        <field name="labor"/>
-                                        <field name="mech"/>
-                                        <field name="est_cost"/>
-                                        <field name="rationale"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>
+                        <group name="group_alias" colspan="2" col="2">
+                            <group>
+                                <field name="project_id"/>
+                                <field name="contract_id"/>
+                                <field name="spj_id"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="currency_id"/>
+                                <field name="overheads"/>
+                                <field name="comment"/>
+                            </group>
+                        </group>
+                        <field name="pricing_ids" widget="one2many_list"
+                               context="{'pricing_ids': pricing_ids,}">
+                            <tree editable="bottom" string="Pricing Items">
+                                <field name="pricing_id"/>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="pricing_uom"/>
+                                <field name="labor"/>
+                                <field name="mech"/>
+                                <field name="est_cost"/>
+                                <field name="rationale"/>
+                            </tree>
+                        </field>
                     </sheet>
                 </form>
             </field>
@@ -329,7 +362,8 @@
                 </p>
             </field>
         </record>
-        <menuitem action="estimate_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left" sequence="6"/>
+        <menuitem action="estimate_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left"
+                  sequence="6"/>
         <!--Prising-->
         <record id="view_pricing_form" model="ir.ui.view">
             <field name="name">bm.pricing.form</field>
@@ -380,7 +414,8 @@
                 </p>
             </field>
         </record>
-        <menuitem action="pricing_act" id="bm_action_pricing" name="Pricings" parent="bm.bm_menu_left" sequence="7"/>
+        <menuitem action="pricing_act" id="bm_action_pricing" name="Pricings" parent="bm.bm_menu_left"
+                  sequence="7"/>
         <!--SPJ-->
         <record id="view_spj_form" model="ir.ui.view">
             <field name="name">bm.spj.form</field>

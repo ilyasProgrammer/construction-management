@@ -12,9 +12,9 @@ class Report(models.Model):
     _description = 'Job report'
 
     date = fields.Datetime(string='End date', help='Дата подтверждения завершения задания прорабом')
-    foremen_id = fields.Many2one('hr.employee', string='Foreman', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
+    foreman_id = fields.Many2one('hr.employee', string='Foreman', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
     task_id = fields.Many2one('project.task')
-    estimate_ids = fields.One2many('bm.report.lines', 'report_id', string='Estimates')
+    lines_ids = fields.One2many('bm.report.lines', 'report_id')
     state = fields.Selection([('draft', 'Черновик'),
                               ('sent', 'Отправлено'),
                               ('approved', 'Утверждено'),
@@ -44,13 +44,36 @@ class Report(models.Model):
         for record in self:
             record.attachment_number = attach_data.get(record.id, 0)
 
+    @api.model
+    def default_get(self, fields):
+        res = super(Report, self).default_get(fields)
+        if self._context.get('task_id', False):
+            res['task_id'] = self._context['task_id']
+        if self._context.get('foreman_id', False):
+            res['foreman_id'] = self._context['foreman_id']
+        return res
+
 
 class ReportLines(models.Model):
     _name = 'bm.report.lines'
     _description = 'Report line (estimate)'
 
     report_id = fields.Many2one('bm.report')
-    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
+    pricing_id = fields.Many2one('bm.pricing', string='Estimate', required=True)
+    code = fields.Char(related='pricing_id.code', readonly=True)
+    name = fields.Char(related='pricing_id.name', readonly=True)
+    rationale = fields.Char(related='pricing_id.rationale', readonly=True)
+    pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     labor = fields.Float(string='Labor')
-    mech = fields.Float(string='Mechanical hours')
-    est_cost = fields.Float(string='Estimate cost')
+    mech = fields.Float(string='Mech.')
+    est_cost = fields.Float(string='Est. cost')
+
+    @api.v8
+    @api.onchange('pricing_id')
+    def on_change_pricing_id(self):
+        if not self.pricing_id:
+            return {}
+        self.labor = self.pricing_id.labor
+        self.mech = self.pricing_id.mech
+        self.est_cost = self.pricing_id.est_cost
+
