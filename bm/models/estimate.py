@@ -18,8 +18,11 @@ class Estimate(models.Model):
     partner_id = fields.Many2one(related='contract_id.partner_id')
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Pricings')
     currency_id = fields.Many2one(related='contract_id.currency_id')
-    overheads = fields.Float(string='Overheads')
-    comment = fields.Char(string='Comment')
+    overheads = fields.Float(string='Overheads', default=0)
+    amount = fields.Float(string='Estimated cost', default=0)
+    amount_labor_cost = fields.Float(string='Total labor cost', default=0)
+    amount_mech_cost = fields.Float(string='Total mech cost', default=0)
+    comment = fields.Text(string='Comment')
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'bm.estimate')],
                                      string='Attachments')
@@ -44,6 +47,20 @@ class Estimate(models.Model):
         for record in self:
             record.attachment_number = attach_data.get(record.id, 0)
 
+    @api.v8
+    @api.onchange('pricing_ids')
+    def on_change_pricing_ids(self):
+        amount = self.overheads
+        amount_labor_cost = 0
+        amount_mech_cost = 0
+        for line in self.pricing_ids:
+            amount += line.labor_vol*line.labor_cost + line.mech_vol*line.mech_cost
+            amount_labor_cost += line.labor_vol*line.labor_cost
+            amount_mech_cost += line.mech_vol*line.mech_cost
+        self.amount = amount
+        self.amount_labor_cost = amount_labor_cost
+        self.amount_mech_cost = amount_mech_cost
+
 
 class EstimateLines(models.Model):
     _name = 'bm.estimate.lines'
@@ -55,15 +72,17 @@ class EstimateLines(models.Model):
     name = fields.Char(related='pricing_id.name', readonly=True)
     rationale = fields.Char(related='pricing_id.rationale', readonly=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
-    labor = fields.Float(string='Labor')
-    mech = fields.Float(string='Mech.')
-    est_cost = fields.Float(string='Est. cost')
+    labor_cost = fields.Float(string='Labor', help='Стоимость часа работ')
+    mech_cost = fields.Float(string='Mech.', help='Стоимость машинного часа')
+    labor_vol = fields.Float(string='Labor vol', help='Объем работ')
+    mech_vol = fields.Float(string='Mech. vol', help='Объем машинных работ')
 
     @api.v8
     @api.onchange('pricing_id')
     def on_change_pricing_id(self):
         if not self.pricing_id:
             return {}
-        self.labor = self.pricing_id.labor
-        self.mech = self.pricing_id.mech
-        self.est_cost = self.pricing_id.est_cost
+        self.labor_cost = self.pricing_id.labor_cost
+        self.mech_cost = self.pricing_id.mech_cost
+        self.labor_vol = self.pricing_id.labor_vol
+        self.mech_vol = self.pricing_id.mech_vol

@@ -184,9 +184,10 @@
                                     <field name="pricing_id"/>
                                     <field name="code"/>
                                     <field name="name"/>
-                                    <field name="labor"/>
-                                    <field name="mech"/>
-                                    <field name="est_cost"/>
+                                    <field name="labor_vol"/>
+                                    <field name="mech_vol"/>
+                                    <field name="labor_cost"/>
+                                    <field name="mech_cost"/>
                                     <field name="rationale"/>
                                 </tree>
                             </field>
@@ -255,9 +256,10 @@
                                 <field name="pricing_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="labor"/>
-                                <field name="mech"/>
-                                <field name="est_cost"/>
+                                <field name="labor_vol"/>
+                                <field name="mech_vol"/>
+                                <field name="labor_cost"/>
+                                <field name="mech_cost"/>
                                 <field name="rationale"/>
                             </tree>
                         </field>
@@ -319,7 +321,6 @@
                             <group>
                                 <field name="currency_id"/>
                                 <field name="overheads"/>
-                                <field name="comment"/>
                             </group>
                         </group>
                         <field name="pricing_ids" widget="one2many_list"
@@ -328,13 +329,19 @@
                                 <field name="pricing_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="pricing_uom"/>
-                                <field name="labor"/>
-                                <field name="mech"/>
-                                <field name="est_cost"/>
+                                <field name="labor_cost"/>
+                                <field name="mech_cost"/>
+                                <field name="labor_vol"/>
+                                <field name="mech_vol"/>
                                 <field name="rationale"/>
                             </tree>
                         </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_labor_cost"/>
+                            <field name="amount_mech_cost"/>
+                            <field name="amount" class="oe_subtotal_footer_separator"/>
+                        </group>
+                        <field name="comment" placeholder="Terms and conditions..."/>
                     </sheet>
                 </form>
             </field>
@@ -378,9 +385,10 @@
                                 <field name="pricing_uom"/>
                             </group>
                             <group>
-                                <field name="labor"/>
-                                <field name="mech"/>
-                                <field name="est_cost"/>
+                                <field name="labor_cost"/>
+                                <field name="mech_cost"/>
+                                <field name="labor_vol"/>
+                                <field name="mech_vol"/>
                             </group>
                         </group>
                         <label for="rationale" string="Rationale" class="oe_edit_only"/>
@@ -397,9 +405,10 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="pricing_uom"/>
-                    <field name="labor"/>
-                    <field name="mech"/>
-                    <field name="est_cost"/>
+                    <field name="labor_vol"/>
+                    <field name="mech_vol"/>
+                    <field name="labor_cost"/>
+                    <field name="mech_cost"/>
                     <field name="rationale"/>
                 </tree>
             </field>

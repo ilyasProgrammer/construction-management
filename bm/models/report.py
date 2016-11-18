@@ -64,16 +64,18 @@ class ReportLines(models.Model):
     name = fields.Char(related='pricing_id.name', readonly=True)
     rationale = fields.Char(related='pricing_id.rationale', readonly=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
-    labor = fields.Float(string='Labor')
-    mech = fields.Float(string='Mech.')
-    est_cost = fields.Float(string='Est. cost')
+    labor_cost = fields.Float(string='Labor', help='Стоимость часа работ')
+    mech_cost = fields.Float(string='Mech.', help='Стоимость машинного часа')
+    labor_vol = fields.Float(string='Labor vol', help='Объем работ')
+    mech_vol = fields.Float(string='Mech. vol', help='Объем машинных работ')
 
     @api.v8
     @api.onchange('pricing_id')
     def on_change_pricing_id(self):
         if not self.pricing_id:
             return {}
-        self.labor = self.pricing_id.labor
-        self.mech = self.pricing_id.mech
-        self.est_cost = self.pricing_id.est_cost
+        self.labor_cost = self.pricing_id.labor_cost
+        self.mech_cost = self.pricing_id.mech_cost
+        self.labor_vol = self.pricing_id.labor_vol
+        self.mech_vol = self.pricing_id.mech_vol
 
