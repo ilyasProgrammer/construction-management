@@ -13,8 +13,8 @@ class Project(models.Model):
     _description = 'Project'
 
     wbs_id = fields.Many2one('bm.wbs', string='WBS Root')
-    external_spj_id = fields.One2many('bm.spj', 'project_external_id', string='External SPJ')
-    local_spj_id = fields.One2many('bm.spj', 'project_local_id', string='Local SPJ')
+    external_spj_id = fields.One2many('bm.spj', 'project_id', string='External SPJ')
+    local_spj_id = fields.One2many('bm.spj', 'project_id', string='Local SPJ')
     full_name = fields.Char(string='Full name', required=True)
     address = fields.Char(string='Address')
     code = fields.Char(string='Object code')

@@ -11,8 +11,8 @@ class ScheduleOfProductionJobs(models.Model):
     _name = 'bm.spj'
     _description = 'Schedule Of Production Jobs'
 
-    project_local_id = fields.Many2one('bm.project')  # привязка может быть только по одному из этих полей
-    project_external_id = fields.Many2one('bm.project')
+    name = fields.Char()
+    project_id = fields.Many2one('bm.project')
     estimate_ids = fields.One2many('bm.estimate', 'spj_id', string='Сметы')
     currency_id = fields.Many2one('res.currency', string='Валюта', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
@@ -27,3 +27,13 @@ class ScheduleOfProductionJobs(models.Model):
                               ('current', 'Текущий'),
                               ('canceled', 'Отменен'),
                               ], 'Статус', readonly=True, default='draft')
+
+    @api.model
+    def create(self, vals):
+        type = 'внутренний' if str(vals['type']) == 'local' else 'внешний'
+        if vals.get('project_id', False):
+            vals['name'] = "ГПР " + type  # + " от " + self.env['bm.project'].browse(vals['project_id']).name
+        else:
+            vals['name'] = "ГПР " + type
+        result = super(ScheduleOfProductionJobs, self).create(vals)
+        return result

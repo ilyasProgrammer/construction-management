@@ -11,15 +11,15 @@ class Contract(models.Model):
     _inherit = 'project.project'
     _description = 'Contract'
 
-    bm_project_id = fields.Many2one('bm.project', string='Project')
-    foremen_ids = fields.Many2many('hr.employee', string='Foremen')
+    bm_project_id = fields.Many2one('bm.project', string='Проект')
+    foremen_ids = fields.Many2many('hr.employee', string='Прораб')
     date = fields.Date(string='Date', required=True)
     start = fields.Date(string='Begin date')
     finish = fields.Date(string='End date')
     code = fields.Char(string='Code', required=True)
     partner_id = fields.Many2one('res.partner', string='Customer', required=True)
     contractor_id = fields.Many2one('res.partner', string='Contractor', required=True)
-    estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Estimates')
+    estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Сметы')
     rate = fields.Float(string='Rate')
     amount = fields.Float(string='Amount')
     subject = fields.Text(string='Subject')

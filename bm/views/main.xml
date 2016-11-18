@@ -433,8 +433,7 @@
                             <group>
                                 <field name="currency_id"/>
                                 <field name="type"/>
-                                <field name="project_local_id"/>
-                                <field name="project_external_id"/>
+                                <field name="project_id"/>
                             </group>
                             <group>
                                 <field name="amount_labor"/>
@@ -443,7 +442,7 @@
                             </group>
                         </group>
                         <label for="estimate_ids" string="Estimates" class="oe_edit_only"/>
-                        <field name="estimate_ids"/>
+                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,}"/>
                     </sheet>
                 </form>
             </field>
@@ -453,8 +452,7 @@
             <field name="model">bm.spj</field>
             <field name="arch" type="xml">
                 <tree string="SPJ">
-                    <field name="project_local_id"/>
-                    <field name="project_external_id"/>
+                    <field name="project_id"/>
                     <field name="currency_id"/>
                     <field name="type"/>
                     <field name="amount_labor"/>

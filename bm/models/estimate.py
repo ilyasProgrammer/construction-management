@@ -14,7 +14,7 @@ class Estimate(models.Model):
     name = fields.Char(string='Name', required=True)
     project_id = fields.Many2one('bm.project', string='Project')
     contract_id = fields.Many2one('project.project', string='Contract')
-    spj_id = fields.Many2one('bm.spj', string='SPJ')
+    spj_id = fields.Many2one('bm.spj', string='ГПР')
     partner_id = fields.Many2one(related='contract_id.partner_id')
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Pricings')
     currency_id = fields.Many2one(related='contract_id.currency_id')
@@ -59,6 +59,12 @@ class Estimate(models.Model):
         self.amount_labor_cost = amount_labor_cost
         self.amount_mech_cost = amount_mech_cost
 
+    @api.model
+    def default_get(self, fields):
+        res = super(Estimate, self).default_get(fields)
+        if self._context.get('spj_id', False):
+            res['spj_id'] = self._context['spj_id']
+        return res
 
 class EstimateLines(models.Model):
     _name = 'bm.estimate.lines'
