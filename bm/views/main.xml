@@ -331,9 +331,9 @@
                             </tree>
                         </field>
                         <group class="oe_subtotal_footer oe_right">
-                            <field name="amount_labor_cost"/>
-                            <field name="amount_mech_cost"/>
-                            <field name="amount" class="oe_subtotal_footer_separator"/>
+                            <field name="amount_labor_cost"  readonly='1'/>
+                            <field name="amount_mech_cost" readonly='1'/>
+                            <field name="amount" class="oe_subtotal_footer_separator" readonly='1'/>
                         </group>
                         <field name="comment" placeholder="Terms and conditions..."/>
                     </sheet>
@@ -431,9 +431,9 @@
                     <sheet string="SPJ">
                         <group name="group_alias" colspan="2" col="2">
                             <group>
-                                <field name="currency_id"/>
-                                <field name="type"/>
                                 <field name="project_id"/>
+                                <field name="type"/>
+                                <field name="currency_id"/>
                             </group>
                             <group>
                                 <field name="amount_labor"/>
@@ -442,7 +442,12 @@
                             </group>
                         </group>
                         <label for="estimate_ids" string="Estimates" class="oe_edit_only"/>
-                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,'project_id': project_id,}"/>
+                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,'project_id': project_id,}">
+                            <tree string="Сметы">
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
                     </sheet>
                 </form>
             </field>

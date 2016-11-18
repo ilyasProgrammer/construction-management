@@ -12,7 +12,7 @@ class ScheduleOfProductionJobs(models.Model):
     _description = 'Schedule Of Production Jobs'
 
     name = fields.Char()
-    project_id = fields.Many2one('bm.project')
+    project_id = fields.Many2one('bm.project', string='Проект')
     estimate_ids = fields.One2many('bm.estimate', 'spj_id', string='Сметы')
     currency_id = fields.Many2one('res.currency', string='Валюта', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
