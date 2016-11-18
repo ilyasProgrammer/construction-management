@@ -72,7 +72,7 @@
             <field name="search_view_id" ref="wbs_search_view"/>
             <field name="view_id" ref="wbs_list_view"/>
         </record>
-        <menuitem action="wbs_act" id="bm_action_wbs" name="WBS" parent="bm_menu_left" sequence="1"/>
+        <menuitem action="wbs_act" id="bm_action_wbs" name="ИСР" parent="bm_menu_left" sequence="1"/>
         <!--Project-->
         <record id="view_project_form" model="ir.ui.view">
             <field name="name">bm.project.form</field>
@@ -152,7 +152,7 @@
                 </p>
             </field>
         </record>
-        <menuitem action="project_tree_act" id="bm_action_project" name="Projects" parent="bm_menu_left"
+        <menuitem action="project_tree_act" id="bm_action_project" name="Проекты" parent="bm_menu_left"
                   sequence="2"/>
         <!--Task-->
         <record id="wb_project_task_form_inherit" model="ir.ui.view">
@@ -214,7 +214,7 @@
                 </data>
             </field>
         </record>
-        <menuitem action="project.action_view_task" id="bm_action_contract" name="Tasks"
+        <menuitem action="project.action_view_task" id="bm_action_contract" name="Задания"
                   parent="bm.bm_menu_left" sequence="4"/>
         <!--Report-->
         <record id="view_report_form" model="ir.ui.view">
@@ -284,7 +284,7 @@
                 </p>
             </field>
         </record>
-        <menuitem action="report_act" id="bm_action_report" name="Reports" parent="bm.bm_menu_left"
+        <menuitem action="report_act" id="bm_action_report" name="Отчеты" parent="bm.bm_menu_left"
                   sequence="5"/>
         <!--Estimate-->
         <record id="view_estimate_form" model="ir.ui.view">
@@ -363,7 +363,7 @@
                 </p>
             </field>
         </record>
-        <menuitem action="estimate_act" id="bm_action_estimate" name="Estimates" parent="bm.bm_menu_left"
+        <menuitem action="estimate_act" id="bm_action_estimate" name="Сметы" parent="bm.bm_menu_left"
                   sequence="6"/>
         <!--Prising-->
         <record id="view_pricing_form" model="ir.ui.view">
@@ -417,7 +417,7 @@
                 </p>
             </field>
         </record>
-        <menuitem action="pricing_act" id="bm_action_pricing" name="Pricings" parent="bm.bm_menu_left"
+        <menuitem action="pricing_act" id="bm_action_pricing" name="Расценки" parent="bm.bm_menu_left"
                   sequence="7"/>
         <!--SPJ-->
         <record id="view_spj_form" model="ir.ui.view">
@@ -431,10 +431,10 @@
                     <sheet string="SPJ">
                         <group name="group_alias" colspan="2" col="2">
                             <group>
-                                <field name="project_local_id"/>
-                                <field name="project_external_id"/>
                                 <field name="currency_id"/>
                                 <field name="type"/>
+                                <field name="project_local_id"/>
+                                <field name="project_external_id"/>
                             </group>
                             <group>
                                 <field name="amount_labor"/>
@@ -473,6 +473,6 @@
                 </p>
             </field>
         </record>
-        <menuitem action="spj_act" id="bm_action_spj" name="SPJs" parent="bm.bm_menu_left" sequence="8"/>
+        <menuitem action="spj_act" id="bm_action_spj" name="ГПР" parent="bm.bm_menu_left" sequence="8"/>
     </data>
 </openerp>

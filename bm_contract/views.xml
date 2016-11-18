@@ -127,7 +127,7 @@
             <field name="search_view_id" ref="project.view_project_project_filter"/>
             <field name="context">{}</field>
         </record>
-    <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Contracts" parent="bm.bm_menu_left" sequence="3"/>
+    <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Договоры" parent="bm.bm_menu_left" sequence="3"/>
     <!--Project-->
     <record id="wb_contract_bm_project_form_inherit" model="ir.ui.view">
         <field name="name">bm.project.form.inherit</field>
