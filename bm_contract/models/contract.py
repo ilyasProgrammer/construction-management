@@ -11,7 +11,7 @@ class Contract(models.Model):
     _inherit = 'project.project'
     _description = 'Contract'
 
-    bm_project_id = fields.Many2one('bm.project', string='BM Project')
+    bm_project_id = fields.Many2one('bm.project', string='Project')
     foremen_ids = fields.Many2many('hr.employee', string='Foremen')
     date = fields.Date(string='Date', required=True)
     start = fields.Date(string='Begin date')
@@ -22,7 +22,7 @@ class Contract(models.Model):
     estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Estimates')
     rate = fields.Float(string='Rate')
     amount = fields.Float(string='Amount')
-    subject = fields.Char(string='Subject')
+    subject = fields.Text(string='Subject')
     type = fields.Selection([('revenue', 'Выручка'),
                              ('expense', 'Затраты'),
                              ], 'Статус', readonly=True, default='revenue')
@@ -52,7 +52,7 @@ class Estimate(models.Model):
 class Task(models.Model):
     _inherit = 'project.task'
 
-    bm_project_id = fields.Many2one(related='project_id.bm_project_id')
+    bm_project_id = fields.Many2one(related='project_id.bm_project_id', string='Project')
     foreman_id = fields.Many2one('hr.employee', string='Foreman')  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
 
 

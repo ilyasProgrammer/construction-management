@@ -101,29 +101,25 @@
                                 <field name="full_name" placeholder="Full name"/>
                             </h2>
                         </div>
-                        <notebook>
-                            <page string="Basic data">
-                                <group name="group_alias" colspan="2" col="2">
-                                    <group>
-                                        <field name="wbs_id"/>
-                                        <field name="engineer_id"/>
-                                    </group>
-                                    <group>
-                                        <field name="code"/>
-                                        <field name="address"/>
-                                    </group>
-                                </group>
-                                <h2>Foremen</h2>
-                                <field name="foremen_ids" nolabel="1" widget="many2many_list">
-                                    <tree string="Foremen">
-                                        <field name="name"/>
-                                        <field name="job_id"/>
-                                        <field name="work_phone"/>
-                                        <field name="department_id"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>
+                        <group name="group_alias" colspan="2" col="2">
+                            <group>
+                                <field name="wbs_id"/>
+                                <field name="engineer_id"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                                <field name="address"/>
+                            </group>
+                        </group>
+                        <h2>Foremen</h2>
+                        <field name="foremen_ids" nolabel="1" widget="many2many_list">
+                            <tree string="Foremen">
+                                <field name="name"/>
+                                <field name="job_id"/>
+                                <field name="work_phone"/>
+                                <field name="department_id"/>
+                            </tree>
+                        </field>
                     </sheet>
                 </form>
             </field>
@@ -145,17 +141,18 @@
                 </tree>
             </field>
         </record>
-        <record id="project_act" model="ir.actions.act_window">
+        <record id="project_tree_act" model="ir.actions.act_window">
             <field name="name">Project</field>
             <field name="res_model">bm.project</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_project_tree"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Here, you can create new Project
                 </p>
             </field>
         </record>
-        <menuitem action="project_act" id="bm_action_project" name="Projects" parent="bm_menu_left"
+        <menuitem action="project_tree_act" id="bm_action_project" name="Projects" parent="bm_menu_left"
                   sequence="2"/>
         <!--Task-->
         <record id="wb_project_task_form_inherit" model="ir.ui.view">
@@ -169,7 +166,7 @@
                         <page name="main_data" string="Basic data">
                             <group>
                                 <group id="g1">
-                                    <field name="project_id"/>
+                                    <field name="project_id" string="Contract"/>
                                     <field name="start"/>
                                     <field name="finish"/>
                                 </group>
@@ -184,11 +181,10 @@
                                     <field name="pricing_id"/>
                                     <field name="code"/>
                                     <field name="name"/>
-                                    <field name="labor_vol"/>
-                                    <field name="mech_vol"/>
-                                    <field name="labor_cost"/>
-                                    <field name="mech_cost"/>
-                                    <field name="rationale"/>
+                                    <field name="labor_vol" string='Labor'/>
+                                    <field name="labor_cost" string='cost'/>
+                                    <field name="mech_vol" string='Mech'/>
+                                    <field name="mech_cost" string='cost'/>
                                 </tree>
                             </field>
                         </page>
@@ -256,11 +252,10 @@
                                 <field name="pricing_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="labor_vol"/>
-                                <field name="mech_vol"/>
-                                <field name="labor_cost"/>
-                                <field name="mech_cost"/>
-                                <field name="rationale"/>
+                                <field name="labor_vol" string='Labor'/>
+                                <field name="labor_cost" string='cost'/>
+                                <field name="mech_vol" string='Mech'/>
+                                <field name="mech_cost" string='cost'/>
                             </tree>
                         </field>
                     </sheet>
@@ -315,8 +310,8 @@
                             <group>
                                 <field name="project_id"/>
                                 <field name="contract_id"/>
-                                <field name="spj_id"/>
                                 <field name="partner_id"/>
+                                <field name="spj_id"/>
                             </group>
                             <group>
                                 <field name="currency_id"/>
@@ -329,11 +324,10 @@
                                 <field name="pricing_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="labor_cost"/>
-                                <field name="mech_cost"/>
-                                <field name="labor_vol"/>
-                                <field name="mech_vol"/>
-                                <field name="rationale"/>
+                                <field name="labor_vol" string='Labor'/>
+                                <field name="labor_cost" string='cost'/>
+                                <field name="mech_vol" string='Mech'/>
+                                <field name="mech_cost" string='cost'/>
                             </tree>
                         </field>
                         <group class="oe_subtotal_footer oe_right">
@@ -351,11 +345,11 @@
             <field name="model">bm.estimate</field>
             <field name="arch" type="xml">
                 <tree string="Estimate">
-                    <field name="project_id"/>
                     <field name="contract_id"/>
-                    <field name="spj_id"/>
+                    <field name="project_id"/>
                     <field name="partner_id"/>
                     <field name="currency_id"/>
+                    <field name="spj_id"/>
                 </tree>
             </field>
         </record>
@@ -405,10 +399,10 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="pricing_uom"/>
-                    <field name="labor_vol"/>
-                    <field name="mech_vol"/>
-                    <field name="labor_cost"/>
-                    <field name="mech_cost"/>
+                    <field name="labor_vol" string='Labor'/>
+                    <field name="labor_cost" string='cost'/>
+                    <field name="mech_vol" string='Mech'/>
+                    <field name="mech_cost" string='cost'/>
                     <field name="rationale"/>
                 </tree>
             </field>

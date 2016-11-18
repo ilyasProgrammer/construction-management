@@ -19,9 +19,9 @@ class Estimate(models.Model):
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Pricings')
     currency_id = fields.Many2one(related='contract_id.currency_id')
     overheads = fields.Float(string='Overheads', default=0)
-    amount = fields.Float(string='Estimated cost', default=0)
-    amount_labor_cost = fields.Float(string='Total labor cost', default=0)
-    amount_mech_cost = fields.Float(string='Total mech cost', default=0)
+    amount = fields.Float(string='Estimated cost', readonly=True, default=0)
+    amount_labor_cost = fields.Float(string='Total labor cost', readonly=True, default=0)
+    amount_mech_cost = fields.Float(string='Total mech cost', readonly=True, default=0)
     comment = fields.Text(string='Comment')
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'bm.estimate')],
@@ -50,14 +50,12 @@ class Estimate(models.Model):
     @api.v8
     @api.onchange('pricing_ids')
     def on_change_pricing_ids(self):
-        amount = self.overheads
         amount_labor_cost = 0
         amount_mech_cost = 0
         for line in self.pricing_ids:
-            amount += line.labor_vol*line.labor_cost + line.mech_vol*line.mech_cost
             amount_labor_cost += line.labor_vol*line.labor_cost
             amount_mech_cost += line.mech_vol*line.mech_cost
-        self.amount = amount
+        self.amount = self.overheads + amount_labor_cost + amount_mech_cost
         self.amount_labor_cost = amount_labor_cost
         self.amount_mech_cost = amount_mech_cost
 
