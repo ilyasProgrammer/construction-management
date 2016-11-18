@@ -93,12 +93,12 @@
                         </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Project Name"/>
+                                <field name="name" placeholder="Название проекта"/>
                             </h1>
                         </div>
                         <div class="oe_row">
                             <h2>
-                                <field name="full_name" placeholder="Full name"/>
+                                <field name="full_name" placeholder="Полное название"/>
                             </h2>
                         </div>
                         <group name="group_alias" colspan="2" col="2">
@@ -303,7 +303,7 @@
                         </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Estimate name"/>
+                                <field name="name" placeholder="Название сметы"/>
                             </h1>
                         </div>
                         <group name="group_alias" colspan="2" col="2">

@@ -25,7 +25,7 @@ class Contract(models.Model):
     subject = fields.Text(string='Subject')
     type = fields.Selection([('revenue', 'Выручка'),
                              ('expense', 'Затраты'),
-                             ], 'Статус', readonly=True, default='revenue')
+                             ], 'Статус', default='revenue')
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
     state = fields.Selection([('draft', 'Черновик'),
