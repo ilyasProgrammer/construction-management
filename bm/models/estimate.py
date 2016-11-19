@@ -11,7 +11,8 @@ class Estimate(models.Model):
     _name = 'bm.estimate'
     _description = 'Estimate'
 
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(string='Название', required=True)
+    sequence = fields.Integer()  # сметы включаются в договоры. Смета принадлежит только 1 договору. Это поле используется только в таблице смет договора.
     project_id = fields.Many2one('bm.project', string='Проект')
     contract_id = fields.Many2one('project.project', string='Договор')
     spj_id = fields.Many2one('bm.spj', string='ГПР')
@@ -53,10 +54,10 @@ class Estimate(models.Model):
         for rec in self:
             amount_labor_cost = 0
             amount_mech_cost = 0
-            for line in self.pricing_ids:
+            for line in rec.pricing_ids:
                 amount_labor_cost += line.labor_vol*line.labor_cost
                 amount_mech_cost += line.mech_vol*line.mech_cost
-            rec.amount = self.overheads + amount_labor_cost + amount_mech_cost
+            rec.amount = rec.overheads + amount_labor_cost + amount_mech_cost
             rec.amount_labor_cost = amount_labor_cost
             rec.amount_mech_cost = amount_mech_cost
 

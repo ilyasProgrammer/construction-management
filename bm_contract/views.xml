@@ -45,17 +45,17 @@
                                 <field name="name" placeholder="Project Name"/>
                             </h1>
                             <h3>
-                                <group>
+                                <group colspan="3" col="3">
                                     <group>
-                                        <field name="code" placeholder="№ 12345..."/>
+                                        <field name="code" placeholder="№ 12345..." nolabel="1"/>
                                     </group>
                                     <group>
                                         <field name="date" nolabel="1"/>
                                     </group>
+                                    <group>
+                                        <field name="type" nolabel="1"/>
+                                    </group>
                                 </group>
-                            </h3>
-                            <h3>
-                                <field name="type"/>
                             </h3>
                         </div>
                         <notebook>
@@ -69,7 +69,8 @@
                                     </group>
                                     <group>
                                         <field name="currency_id"/>
-                                        <field name="rate"/>
+                                        <field name="hide_rate" invisible="1"/>
+                                        <field name="rate" attrs="{'invisible': [('hide_rate', '=', True)]}"/>
                                         <field name="amount"/>
                                     </group>
                                     </group>
@@ -82,7 +83,18 @@
                                         </group>
                                     </group>
                                  </div>
-                                <h2>Foremen</h2>
+                                <h2>Сметы</h2>
+                                <field name="estimate_ids" nolabel="1" widget="many2many_list">
+                                    <tree string="Estimates">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="amount_labor_cost"/>
+                                        <field name="amount_mech_cost"/>
+                                        <field name="currency_id"/>
+                                    </tree>
+                                </field>
+                                <h2>Прорабы</h2>
                                 <field name="foremen_ids" nolabel="1" widget="many2many_list">
                                     <tree string="Foremen">
                                         <field name="name"/>
@@ -93,7 +105,7 @@
                                 </field>
                                 <group></group>
                                 <h2></h2>
-                                <h2>Subject</h2>
+                                <h2>Предмет договора</h2>
                                 <field name="subject"/>
                             </page>
                         </notebook>

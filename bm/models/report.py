@@ -11,9 +11,10 @@ class Report(models.Model):
     _name = 'bm.report'
     _description = 'Job report'
 
-    date = fields.Datetime(string='End date', help='Дата подтверждения завершения задания прорабом')
-    foreman_id = fields.Many2one('hr.employee', string='Foreman', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
-    task_id = fields.Many2one('project.task')
+    name = fields.Char(compute='_get_name', store=True)
+    date = fields.Datetime(string='Дата завершения', default=fields.Date.context_today, help='Дата подтверждения завершения задания прорабом')
+    foreman_id = fields.Many2one('hr.employee', string='Прораб', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
+    task_id = fields.Many2one('project.task', string='Задание')
     lines_ids = fields.One2many('bm.report.lines', 'report_id')
     state = fields.Selection([('draft', 'Черновик'),
                               ('sent', 'Отправлено'),
@@ -22,7 +23,7 @@ class Report(models.Model):
                               ], 'Статус', readonly=True, default='draft')
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'bm.report')],
-                                     string='Attachments')
+                                     string='Вложения')
     attachment_number = fields.Integer(compute='_get_attachment_number', string="Number of Attachments")
 
     @api.multi
@@ -44,6 +45,12 @@ class Report(models.Model):
         for record in self:
             record.attachment_number = attach_data.get(record.id, 0)
 
+    @api.multi
+    @api.depends('task_id')
+    def _get_name(self):
+        for record in self:
+            record.name = "Отчет по заданию " + str(record.task_id.code)
+
     @api.model
     def default_get(self, fields):
         res = super(Report, self).default_get(fields)
@@ -51,6 +58,9 @@ class Report(models.Model):
             res['task_id'] = self._context['task_id']
         if self._context.get('foreman_id', False):
             res['foreman_id'] = self._context['foreman_id']
+        employee = self.env['hr.employee'].search([('user_id', '=', self.env.user.id)])
+        if len(employee):
+            res['foreman_id'] = employee.id
         return res
 
 

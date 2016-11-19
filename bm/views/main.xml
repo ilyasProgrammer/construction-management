@@ -163,7 +163,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//notebook//page[1]" position="before">
-                        <page name="main_data" string="Basic data">
+                        <page name="main_data" string="Основное">
                             <group>
                                 <group id="g1">
                                     <field name="project_id" string="Договор"/>
@@ -345,6 +345,7 @@
             <field name="model">bm.estimate</field>
             <field name="arch" type="xml">
                 <tree string="Estimate">
+                    <field name="name"/>
                     <field name="contract_id"/>
                     <field name="project_id"/>
                     <field name="partner_id"/>

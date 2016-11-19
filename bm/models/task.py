@@ -16,14 +16,14 @@ class Task(models.Model):
         stage_id = self.env['project.task.type'].search([('name','=','Draft')])[0]
         return stage_id
 
-    code = fields.Char(string='Number')
-    date = fields.Date(string='Task date')
+    code = fields.Char(string='Номер задания', required=True)
+    date = fields.Date(string='Дата', default=fields.Date.context_today)
     stage_id = fields.Many2one('project.task.type', 'Stage', select=True, copy=False, default=_get_stage)
-    start = fields.Date(string='Start date')
-    finish = fields.Date(string='Finish date')
-    engineer_id = fields.Many2one('hr.employee', string='Engineer')
-    pricing_ids = fields.One2many('project.pricing.lines', 'task_id', string='Pricings')
-    report_ids = fields.One2many('bm.report', 'task_id', string='Reports')
+    start = fields.Date(string='Старт', default=fields.Date.context_today)
+    finish = fields.Date(string='Финиш')
+    engineer_id = fields.Many2one('hr.employee', string='Инженер')
+    pricing_ids = fields.One2many('project.pricing.lines', 'task_id', string='Расценки')
+    report_ids = fields.One2many('bm.report', 'task_id', string='Отчеты')
     # договор - это project_id в родной модели
 
     @api.model
@@ -38,15 +38,15 @@ class PricingLines(models.Model):
     _description = 'Task line (estimate)'
 
     task_id = fields.Many2one('project.task')
-    pricing_id = fields.Many2one('bm.pricing', string='Estimate')
-    code = fields.Char(related='pricing_id.code', readonly=True)
-    name = fields.Char(related='pricing_id.name', readonly=True)
-    rationale = fields.Char(related='pricing_id.rationale', readonly=True)
-    pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
-    labor_cost = fields.Float(string='Labor', help='Стоимость часа работ')
-    mech_cost = fields.Float(string='Mech.', help='Стоимость машинного часа')
-    labor_vol = fields.Float(string='Labor vol', help='Объем работ')
-    mech_vol = fields.Float(string='Mech. vol', help='Объем машинных работ')
+    pricing_id = fields.Many2one('bm.pricing', string='Расценка')
+    code = fields.Char(related='pricing_id.code', string='Код', readonly=True)
+    name = fields.Char(related='pricing_id.name', string='Имя', readonly=True)
+    rationale = fields.Char(related='pricing_id.rationale', string='Основание', readonly=True)
+    pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', string='Ед. изм.', readonly=True)
+    labor_cost = fields.Float(string='Цена часа работы', help='Стоимость часа работ')
+    mech_cost = fields.Float(string='Цена машинного часа', help='Стоимость машинного часа')
+    labor_vol = fields.Float(string='Количество работы', help='Объем работ')
+    mech_vol = fields.Float(string='Количество машинных часов', help='Объем машинных работ')
 
     @api.v8
     @api.onchange('pricing_id')
