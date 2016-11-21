@@ -444,11 +444,16 @@
                                 <field name="amount_est_cost"/>
                             </group>
                         </group>
-                        <label for="estimate_ids" string="Estimates" class="oe_edit_only"/>
-                        <field name="estimate_ids" widget="one2many_list" context="{'spj_id': id,'project_id': project_id,}">
-                            <tree string="Сметы">
-                                <field name="name"/>
-                                <field name="amount"/>
+                        <!--<h2>Description</h2>-->
+                        <field name="lines" context="{}">
+                            <tree widget="one2many_list"  editable="bottom"  >
+                                <field name="estimate_id"/>
+                                <field name="type"/>
+                                <field name="month1"/>
+                                <field name="month2"/>
+                                <field name="month3"/>
+                                <field name="month4"/>
+                                <field name="month5"/>
                             </tree>
                         </field>
                     </sheet>
