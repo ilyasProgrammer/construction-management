@@ -6,12 +6,12 @@
         <menuitem name="Menu" id="bm_menu_left" parent="bm_menu_main" sequence="1"/>
         <!--ИСР-->
         <record id="wbs_act" model="ir.actions.act_window">
-            <field name="name">WBS</field>
+            <field name="name">ИСР</field>
             <field name="res_model">bm.wbs</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new WBS
+                    Создайте новую Иерархическую Структуру Работ
                 </p>
             </field>
         </record>
@@ -57,7 +57,7 @@
             <field name="model">bm.wbs</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <tree string="WBS">
+                <tree string="ИСР">
                     <field name="complete_name"/>
                     <field name="code"/>
                     <field name="description"/>
@@ -65,7 +65,7 @@
             </field>
         </record>
         <record id="wbs_act" model="ir.actions.act_window">
-            <field name="name">WBS</field>
+            <field name="name">ИСР</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">bm.wbs</field>
             <field name="view_type">form</field>
@@ -78,11 +78,11 @@
             <field name="name">bm.project.form</field>
             <field name="model">bm.project</field>
             <field name="arch" type="xml">
-                <form string="Project">
+                <form string="Проект">
                     <header>
                         <field name="state" widget="statusbar" clickable="True"/>
                     </header>
-                    <sheet string="Project">
+                    <sheet string="Проект">
                         <div class="oe_button_box" name="button_box" groups="base.group_user">
                             <button name="action_get_attachment_tree_view"
                                     class="oe_stat_button"
@@ -117,10 +117,10 @@
                         <h2>Прорабы</h2>
                         <field name="foremen_ids" nolabel="1" widget="many2many_list">
                             <tree string="Foremen">
-                                <field name="name"/>
-                                <field name="job_id"/>
-                                <field name="work_phone"/>
-                                <field name="department_id"/>
+                                <field name="name" string="Имя"/>
+                                <field name="job_id" string="Должность"/>
+                                <field name="work_phone" string="Телефон"/>
+                                <field name="department_id" string="Отдел"/>
                             </tree>
                         </field>
                         <group></group>
@@ -128,10 +128,10 @@
                         <h2>ИСР</h2>
                         <field name="wbs_ids">
                             <tree widget="one2many_list"  editable="bottom">
-                                <field name="code"/>
-                                <field name="name"/>
+                                <field name="code" string="Код"/>
+                                <field name="name" string="Название"/>
                                 <field name="parent_id"/>
-                                <field name="description"/>
+                                <field name="description" string="Описание"/>
                             </tree>
                         </field>
                     </sheet>
@@ -142,26 +142,25 @@
             <field name="name">bm.project.tree</field>
             <field name="model">bm.project</field>
             <field name="arch" type="xml">
-                <tree string="Project">
-                    <field name="full_name"/>
-                    <field name="name"/>
-                    <field name="address"/>
+                <tree string="Проект">
                     <field name="code"/>
+                    <field name="name" string="Название"/>
                     <field name="engineer_id"/>
-                    <field name="foremen_ids"/>
-                    <field name="attachment_ids"/>
+                    <field name="partner_id"/>
+                    <field name="total_tasks_amount" string="Всего задач"/>
+                    <field name="total_reports_amount" string="Всего отчетов"/>
                     <field name="state"/>
                 </tree>
             </field>
         </record>
         <record id="project_tree_act" model="ir.actions.act_window">
-            <field name="name">Project</field>
+            <field name="name">Проект</field>
             <field name="res_model">bm.project</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_project_tree"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new Project
+                    Создайте новый Проект
                 </p>
             </field>
         </record>
@@ -200,7 +199,13 @@
                             </field>
                         </page>
                         <page name="reports_page" string="Отчеты">
-                            <field name="report_ids"  context="{'task_id': id,'foreman_id': foreman_id,}"/>
+                            <field name="report_ids" context="{'task_id': id,'foreman_id': foreman_id,}">
+                                <tree editable="bottom">
+                                    <field name="foreman_id"/>
+                                    <field name="date"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
                         </page>
                     </xpath>
                     <xpath expr="//field[@name='kanban_state']" position="replace">
@@ -240,7 +245,7 @@
             </field>
         </record>
         <record id="bm_action_view_task" model="ir.actions.act_window">
-            <field name="name">Tasks</field>
+            <field name="name">Задания</field>
             <field name="res_model">project.task</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{}</field>
@@ -253,7 +258,7 @@
             <field name="name">bm.report.form</field>
             <field name="model">bm.report</field>
             <field name="arch" type="xml">
-                <form string="Report">
+                <form string="Отчет">
                     <header>
                         <field name="state" widget="statusbar" clickable="True"/>
                     </header>
@@ -266,11 +271,9 @@
                                 <field name="attachment_number" widget="statinfo" string="Attachments"/>
                             </button>
                         </div>
-                        <div class="oe_title">
-                            <h1>
-                                <field name="task_id" placeholder="Task"/>
-                            </h1>
-                        </div>
+                        <group>
+                            <field name="task_id" placeholder="Выберите исходное задание" string="Отчет к заданию:"/>
+                        </group>
                         <group name="group_alias" colspan="2" col="2">
                             <group>
                                 <field name="foreman_id"/>
@@ -284,10 +287,12 @@
                                 <field name="pricing_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="labor_vol" string='Labor'/>
-                                <field name="labor_cost" string='cost'/>
-                                <field name="mech_vol" string='Mech'/>
-                                <field name="mech_cost" string='cost'/>
+                                <field name="pricing_uom"/>
+                                <field name="amount"/>
+                                <field name="labor_vol" string='Чел.часы'/>
+                                <field name="mech_vol" string='Мех.часы'/>
+                                <field name="labor_cost" string='$ чел-часа'/>
+                                <field name="mech_cost" string='$ мех.часа'/>
                             </tree>
                         </field>
                     </sheet>
@@ -307,7 +312,7 @@
             </field>
         </record>
         <record id="report_act" model="ir.actions.act_window">
-            <field name="name">Reports</field>
+            <field name="name">Отчеты</field>
             <field name="res_model">bm.report</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
@@ -323,8 +328,8 @@
             <field name="name">bm.estimate.form</field>
             <field name="model">bm.estimate</field>
             <field name="arch" type="xml">
-                <form string="Estimate">
-                    <sheet string="Estimate">
+                <form string="Смета">
+                    <sheet string="Смета">
                         <div class="oe_button_box" name="button_box" groups="base.group_user">
                             <button name="action_get_attachment_tree_view"
                                     class="oe_stat_button"
@@ -398,12 +403,12 @@
             </field>
         </record>
         <record id="estimate_act" model="ir.actions.act_window">
-            <field name="name">Estimates</field>
+            <field name="name">Сметы</field>
             <field name="res_model">bm.estimate</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new Estimate
+                    Создайте новую Смету
                 </p>
             </field>
         </record>
@@ -457,12 +462,12 @@
             </field>
         </record>
         <record id="pricing_act" model="ir.actions.act_window">
-            <field name="name">Pricings</field>
+            <field name="name">Расценка</field>
             <field name="res_model">bm.pricing</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new Pricing
+                    Создайте новую Расценку
                 </p>
             </field>
         </record>
@@ -521,12 +526,12 @@
             </field>
         </record>
         <record id="spj_act" model="ir.actions.act_window">
-            <field name="name">SPJs</field>
+            <field name="name">ГПР</field>
             <field name="res_model">bm.spj</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new SPJ
+                    Создайте новый График Производственных Работ
                 </p>
             </field>
         </record>

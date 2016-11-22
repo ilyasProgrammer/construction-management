@@ -20,7 +20,7 @@ class Estimate(models.Model):
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Расценки')
     currency_id = fields.Many2one(related='contract_id.currency_id')
     overheads = fields.Float(string='Накладные расходы', default=0)
-    total_overheads = fields.Float(string='Накладные расходы', default=0)
+    total_overheads = fields.Float(string='Накладные расходы', compute='_compute_amount', store=True)
     pricing_amount = fields.Integer(string='Всего расценок', compute='_compute_amount', store=True)
     total_cost = fields.Float(string='Сметная стоимость', compute='_compute_amount', store=True)
     total_amount_labor = fields.Float(string='Количество чел-часов', compute='_compute_amount', store=True)

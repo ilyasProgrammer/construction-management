@@ -66,13 +66,14 @@ class Report(models.Model):
 
 class ReportLines(models.Model):
     _name = 'bm.report.lines'
-    _description = 'Report line (estimate)'
+    _description = 'Report line (pricings)'
 
     report_id = fields.Many2one('bm.report')
-    pricing_id = fields.Many2one('bm.pricing', string='Estimate', required=True)
+    pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
     name = fields.Char(related='pricing_id.name', readonly=True)
     rationale = fields.Char(related='pricing_id.rationale', readonly=True)
+    amount = fields.Float(string='Количество')
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     labor_cost = fields.Float(string='Labor', help='Стоимость часа работ')
     mech_cost = fields.Float(string='Mech.', help='Стоимость машинного часа')

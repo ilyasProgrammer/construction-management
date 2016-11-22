@@ -13,7 +13,7 @@ class Contract(models.Model):
 
     bm_project_id = fields.Many2one('bm.project', string='Проект')
     foremen_ids = fields.Many2many('hr.employee', string='Прорабы')
-    date = fields.Date(string='Date', required=True, default=fields.Date.context_today)
+    date = fields.Date(string='Дата', required=True, default=fields.Date.context_today)
     start = fields.Date(string='Старт')
     finish = fields.Date(string='Финиш')
     code = fields.Char(string='Код', required=True)
@@ -23,6 +23,9 @@ class Contract(models.Model):
     rate = fields.Float(string='Курс', required=True)
     amount = fields.Float(string='Сумма')
     subject = fields.Text(string='Предмет')
+    total_tasks_amount = fields.Integer(compute='_compute_amount', store=True)
+    total_reports_amount = fields.Integer(compute='_compute_amount', store=True)
+    total_estimates_amount = fields.Integer(compute='_compute_amount', store=True)
     type = fields.Selection([('revenue', 'Выручка'),
                              ('expense', 'Затраты'),
                              ], 'Статус', default='revenue')
@@ -34,6 +37,21 @@ class Contract(models.Model):
                               ], 'Статус', readonly=True, default='draft')
     hide_rate = fields.Boolean(compute='_compute_vision', store=True, default=True)
     # tasks_ids - in parent model
+
+    @api.multi
+    @api.depends('task_ids', 'estimate_ids')
+    def _compute_amount(self):
+        for rec in self:
+            rec.total_tasks_amount = len(rec.task_ids)
+            rec.total_reports_amount = len(self.env['bm.report'].search([('task_id', 'in', rec.task_ids.ids)]))
+            rec.total_estimates_amount = len(self.env['bm.estimate'].search([('contract_id', '=', rec.id)]))
+        all_proj = self.env['bm.project'].search([])
+        for proj in all_proj:
+            if len(proj.contracts_ids):
+                proj_tasks = self.env['project.task'].search([('project_id', 'in', proj.contracts_ids.ids)])
+                proj.total_tasks_amount = len(proj_tasks)
+                proj_reports = self.env['bm.report'].search([('task_id', 'in', proj_tasks.ids)])
+                proj.total_reports_amount = len(proj_reports)
 
     @api.multi
     @api.depends('currency_id')
@@ -51,6 +69,18 @@ class Project(models.Model):
     _inherit = 'bm.project'
 
     contracts_ids = fields.One2many('project.project', 'bm_project_id', string='Договоры')
+    total_tasks_amount = fields.Integer(compute='_compute_amount', store=True)
+    total_reports_amount = fields.Integer(compute='_compute_amount', store=True)
+
+    @api.multi
+    @api.depends('contracts_ids', 'contracts_ids.task_ids', 'contracts_ids.task_ids.report_ids')
+    def _compute_amount(self):
+        for proj in self:
+            if len(proj.contracts_ids):
+                proj_tasks = self.env['project.task'].search([('project_id', 'in', proj.contracts_ids.ids)])
+                proj.total_tasks_amount = len(proj_tasks)
+                proj_reports = self.env['bm.report'].search([('task_id', 'in', proj_tasks.ids)])
+                proj.total_reports_amount = len(proj_reports)
 
 
 class Estimate(models.Model):

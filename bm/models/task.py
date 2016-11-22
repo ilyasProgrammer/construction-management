@@ -24,20 +24,31 @@ class Task(models.Model):
     engineer_id = fields.Many2one('hr.employee', string='Инженер')
     pricing_ids = fields.One2many('project.pricing.lines', 'task_id', string='Расценки')
     report_ids = fields.One2many('bm.report', 'task_id', string='Отчеты')
-    total_reports_amount = fields.Integer(string='Отчетов всего', compute='_compute_amount', store=True)
+    total_reports_amount = fields.Integer(string='Отчетов всего', compute='_compute_counts', store=True)
     # договор - это project_id в родной модели
 
     @api.model
     def create(self, vals):
-        vals['name'] = "Задание " + str(vals['code']) + " от " + str(vals['date'])
+        vals['name'] = 'Task from ' + vals['date'] + ' number ' + vals['code']
         result = super(Task, self).create(vals)
         return result
 
     @api.multi
     @api.depends('report_ids')
-    def _compute_amount(self):
+    def _compute_counts(self):
         for rec in self:
             rec.total_reports_amount = len(rec.report_ids)
+        all_proj = self.env['project.project'].search([])
+        for rec in all_proj:
+            rec.total_tasks_amount = len(rec.task_ids)
+            rec.total_reports_amount = len(self.env['bm.report'].search([('task_id', 'in', rec.task_ids.ids)]))
+        all_bm_proj = self.env['bm.project'].search([])
+        for proj in all_bm_proj:
+            if len(proj.contracts_ids):
+                proj_tasks = self.env['project.task'].search([('project_id', 'in', proj.contracts_ids.ids)])
+                proj.total_tasks_amount = len(proj_tasks)
+                proj_reports = self.env['bm.report'].search([('task_id', 'in', proj_tasks.ids)])
+                proj.total_reports_amount = len(proj_reports)
 
 
 class PricingLines(models.Model):

@@ -17,7 +17,9 @@ class Project(models.Model):
     local_spj_id = fields.One2many('bm.spj', 'project_id', string='Внутренний ГПР')
     full_name = fields.Char(string='Полное имя', required=True)
     address = fields.Char(string='Адрес')
-    code = fields.Char(string='Код объекта')
+    code = fields.Char(string='Шифр')
+    total_tasks_amount = fields.Integer(compute='_compute_totals', store=True)
+    total_reports_amount = fields.Integer(compute='_compute_totals', store=True)
     engineer_id = fields.Many2one('hr.employee', string='Инженер', required=True)
     foremen_ids = fields.Many2many('hr.employee', string='Прораб', required=True)
     partner_id = fields.Many2one('res.partner', string='Заказчик', required=True)
@@ -32,6 +34,15 @@ class Project(models.Model):
                                      domain=[('res_model', '=', 'bm.project')],
                                      string='Вложения')
     attachment_number = fields.Integer(compute='_get_attachment_number', string="Номер")
+
+    @api.multi
+    @api.depends('task_ids', 'task_ids.report_ids')
+    def _compute_totals(self):
+        for proj in self:
+            proj_tasks = self.env['project.task'].search([('project_id', 'in', proj.contracts_ids.ids)])
+            proj.total_tasks_amount = len(proj_tasks)
+            proj_reports = self.env['bm.report'].search([('task_id', 'in', proj_tasks.ids)])
+            proj.total_reports_amount = len(proj_reports)
 
     @api.multi
     def action_get_attachment_tree_view(self):
