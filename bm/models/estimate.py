@@ -19,11 +19,15 @@ class Estimate(models.Model):
     partner_id = fields.Many2one(related='contract_id.partner_id')
     pricing_ids = fields.One2many('bm.estimate.lines', 'estimate_id', string='Расценки')
     currency_id = fields.Many2one(related='contract_id.currency_id')
-    overheads = fields.Float(string='Overheads', default=0)
-    amount = fields.Float(string='Сметная стоимость', compute='_compute_amount', store=True)
-    amount_labor_cost = fields.Float(string='Стоимость труда', compute='_compute_amount', store=True)
-    amount_mech_cost = fields.Float(string='Стоимость машин', compute='_compute_amount', store=True)
-    comment = fields.Text(string='Comment')
+    overheads = fields.Float(string='Накладные расходы', default=0)
+    total_overheads = fields.Float(string='Накладные расходы', default=0)
+    pricing_amount = fields.Integer(string='Всего расценок', compute='_compute_amount', store=True)
+    total_cost = fields.Float(string='Сметная стоимость', compute='_compute_amount', store=True)
+    total_amount_labor = fields.Float(string='Количество чел-часов', compute='_compute_amount', store=True)
+    total_amount_mech = fields.Float(string='Количество мех. часов', compute='_compute_amount', store=True)
+    total_cost_labor = fields.Float(string='Стоимость труда', compute='_compute_amount', store=True)
+    total_cost_mech = fields.Float(string='Стоимость машин', compute='_compute_amount', store=True)
+    comment = fields.Text(string='Описание')
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'bm.estimate')],
                                      string='Attachments')
@@ -49,17 +53,25 @@ class Estimate(models.Model):
             record.attachment_number = attach_data.get(record.id, 0)
 
     @api.multi
-    @api.depends('pricing_ids')
+    @api.depends('pricing_ids', 'overheads')
     def _compute_amount(self):
         for rec in self:
-            amount_labor_cost = 0
-            amount_mech_cost = 0
-            for line in rec.pricing_ids:
-                amount_labor_cost += line.labor_vol*line.labor_cost
-                amount_mech_cost += line.mech_vol*line.mech_cost
-            rec.amount = rec.overheads + amount_labor_cost + amount_mech_cost
-            rec.amount_labor_cost = amount_labor_cost
-            rec.amount_mech_cost = amount_mech_cost
+            total_amount_labor = 0
+            total_amount_mech = 0
+            total_cost_labor = 0
+            total_cost_mech = 0
+            for l in rec.pricing_ids:
+                total_amount_labor += l.labor_vol*l.amount
+                total_amount_mech += l.mech_vol*l.amount
+                total_cost_labor += l.labor_vol*l.amount*l.labor_cost
+                total_cost_mech += l.mech_vol*l.amount*l.mech_cost
+            rec.total_amount_labor = total_amount_labor
+            rec.total_amount_mech = total_amount_mech
+            rec.total_cost_labor = total_cost_labor
+            rec.total_cost_mech = total_cost_mech
+            rec.total_cost = total_cost_labor + total_cost_mech + rec.overheads
+            rec.pricing_amount = len(rec.pricing_ids)
+            rec.total_overheads = rec.overheads
 
     @api.model
     def default_get(self, fields):
@@ -85,6 +97,17 @@ class EstimateLines(models.Model):
     mech_cost = fields.Float(string='Mech.', help='Стоимость машинного часа')
     labor_vol = fields.Float(string='Labor vol', help='Объем работ')
     mech_vol = fields.Float(string='Mech. vol', help='Объем машинных работ')
+    amount = fields.Float(string='Количество', required=True)
+    amount_unit = fields.Float(string='На 1 ед. раб.', compute='_compute_amount', store=True)
+    amount_total = fields.Float(string='Всего', compute='_compute_amount', store=True)
+    uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
+
+    @api.multi
+    @api.depends('pricing_id', 'amount', 'labor_cost', 'mech_cost', 'labor_vol', 'mech_vol')
+    def _compute_amount(self):
+        for rec in self:
+            rec.amount_unit = rec.labor_vol*rec.labor_cost + rec.mech_vol*rec.mech_cost
+            rec.amount_total = rec.amount * rec.amount_unit
 
     @api.v8
     @api.onchange('pricing_id')
@@ -95,3 +118,4 @@ class EstimateLines(models.Model):
         self.mech_cost = self.pricing_id.mech_cost
         self.labor_vol = self.pricing_id.labor_vol
         self.mech_vol = self.pricing_id.mech_vol
+        self.uom = self.pricing_id.pricing_uom

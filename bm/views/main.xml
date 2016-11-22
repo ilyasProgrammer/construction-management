@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!-- Top menu item -->
+        <!-- Главное меню -->
         <menuitem name="Building" id="bm_menu_main" sequence="60"/>
         <menuitem name="Menu" id="bm_menu_left" parent="bm_menu_main" sequence="1"/>
-        <!--WBS-->
+        <!--ИСР-->
         <record id="wbs_act" model="ir.actions.act_window">
             <field name="name">WBS</field>
             <field name="res_model">bm.wbs</field>
@@ -73,7 +73,7 @@
             <field name="view_id" ref="wbs_list_view"/>
         </record>
         <menuitem action="wbs_act" id="bm_action_wbs" name="ИСР" parent="bm_menu_left" sequence="1"/>
-        <!--Project-->
+        <!--Проект-->
         <record id="view_project_form" model="ir.ui.view">
             <field name="name">bm.project.form</field>
             <field name="model">bm.project</field>
@@ -103,21 +103,35 @@
                         </div>
                         <group name="group_alias" colspan="2" col="2">
                             <group>
-                                <field name="wbs_id"/>
+                                <field name="partner_id"/>
                                 <field name="engineer_id"/>
                             </group>
                             <group>
+                                <field name="contractor_id"/>
                                 <field name="code"/>
                                 <field name="address"/>
                             </group>
                         </group>
-                        <h2>Foremen</h2>
+                        <group></group>
+                        <h2></h2>
+                        <h2>Прорабы</h2>
                         <field name="foremen_ids" nolabel="1" widget="many2many_list">
                             <tree string="Foremen">
                                 <field name="name"/>
                                 <field name="job_id"/>
                                 <field name="work_phone"/>
                                 <field name="department_id"/>
+                            </tree>
+                        </field>
+                        <group></group>
+                        <h2></h2>
+                        <h2>ИСР</h2>
+                        <field name="wbs_ids">
+                            <tree widget="one2many_list"  editable="bottom">
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="parent_id"/>
+                                <field name="description"/>
                             </tree>
                         </field>
                     </sheet>
@@ -129,7 +143,6 @@
             <field name="model">bm.project</field>
             <field name="arch" type="xml">
                 <tree string="Project">
-                    <field name="wbs_id"/>
                     <field name="full_name"/>
                     <field name="name"/>
                     <field name="address"/>
@@ -154,7 +167,7 @@
         </record>
         <menuitem action="project_tree_act" id="bm_action_project" name="Проекты" parent="bm_menu_left"
                   sequence="2"/>
-        <!--Task-->
+        <!--Задание-->
         <record id="wb_project_task_form_inherit" model="ir.ui.view">
             <field name="name">project.task.form.inherit</field>
             <field name="model">project.task</field>
@@ -167,24 +180,22 @@
                             <group>
                                 <group id="g1">
                                     <field name="project_id" string="Договор"/>
-                                    <field name="start"/>
-                                    <field name="finish"/>
-                                </group>
-                                <group id="g2">
                                     <field name="engineer_id"/>
+                                    <field name="start" string='Начало'/>
+                                    <field name="finish" string='Окончание'/>
                                 </group>
                             </group>
                         </page>
                         <page name="est_page" string="Расценки">
                             <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
                                 <tree editable="bottom" string="Pricing Items">
-                                    <field name="pricing_id"/>
-                                    <field name="code"/>
-                                    <field name="name"/>
-                                    <field name="labor_vol" string='Labor'/>
-                                    <field name="labor_cost" string='cost'/>
-                                    <field name="mech_vol" string='Mech'/>
-                                    <field name="mech_cost" string='cost'/>
+                                    <field name="wbs_id"/>
+                                    <field name="pricing_id" string='Наименование работ'/>
+                                    <field name="pricing_uom"/>
+                                    <field name="amount"/>
+                                    <field name="labor_vol" string='Чел.часы'/>
+                                    <field name="mech_vol" string='Мех.часы'/>
+                                    <field name="comment"/>
                                 </tree>
                             </field>
                         </page>
@@ -204,7 +215,7 @@
                     <xpath expr="//field[@name='priority']/../.." position="replace">
                         <group>
                             <group>
-                                <field name="code"/>
+                                <field name="code" string="Задание"/>
                             </group>
                             <group>
                                 <field name="date" string="от"/>
@@ -214,9 +225,30 @@
                 </data>
             </field>
         </record>
-        <menuitem action="project.action_view_task" id="bm_action_contract" name="Задания"
+        <record id="project.bm_view_task_tree2" model="ir.ui.view">
+            <field name="name">project.task.tree</field>
+            <field name="model">project.task</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Задания">
+                    <field name="code" string="ID"/>
+                    <field name="date"/>
+                    <field name="engineer_id"/>
+                    <field name="total_reports_amount"/>
+                    <field name="stage_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="bm_action_view_task" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="project.bm_view_task_tree2"/>
+        </record>
+        <menuitem action="bm_action_view_task" id="bm_action_contract" name="Задания"
                   parent="bm.bm_menu_left" sequence="4"/>
-        <!--Report-->
+        <!--Отчет-->
         <record id="view_report_form" model="ir.ui.view">
             <field name="name">bm.report.form</field>
             <field name="model">bm.report</field>
@@ -286,7 +318,7 @@
         </record>
         <menuitem action="report_act" id="bm_action_report" name="Отчеты" parent="bm.bm_menu_left"
                   sequence="5"/>
-        <!--Estimate-->
+        <!--Смета-->
         <record id="view_estimate_form" model="ir.ui.view">
             <field name="name">bm.estimate.form</field>
             <field name="model">bm.estimate</field>
@@ -318,22 +350,28 @@
                                 <field name="overheads"/>
                             </group>
                         </group>
-                        <field name="pricing_ids" widget="one2many_list"
-                               context="{'pricing_ids': pricing_ids,}">
+                        <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
                             <tree editable="bottom" string="Pricing Items">
-                                <field name="pricing_id"/>
                                 <field name="code"/>
-                                <field name="name"/>
-                                <field name="labor_vol" string='Labor'/>
-                                <field name="labor_cost" string='cost'/>
-                                <field name="mech_vol" string='Mech'/>
-                                <field name="mech_cost" string='cost'/>
+                                <field name="pricing_id" string='Работа'/>
+                                <field name="uom"/>
+                                <field name="amount" string='Кол-во'/>
+                                <field name="labor_vol" string='Чел-часы'/>
+                                <field name="labor_vol" string='Чел-часы'/>
+                                <field name="mech_vol" string='Мех.часы'/>
+                                <field name="labor_cost" string='$ чел-часа'/>
+                                <field name="mech_cost" string='$ мех.часа'/>
+                                <field name="amount_unit" string='$ ед.работы'/>
+                                <field name="amount_total" string='Всего'/>
                             </tree>
                         </field>
                         <group class="oe_subtotal_footer oe_right">
-                            <field name="amount_labor_cost"  readonly='1'/>
-                            <field name="amount_mech_cost" readonly='1'/>
-                            <field name="amount" class="oe_subtotal_footer_separator" readonly='1'/>
+                            <field name="total_amount_labor" readonly='1'/>
+                            <field name="total_amount_mech"  readonly='1'/>
+                            <field name="total_cost_labor"  readonly='1'/>
+                            <field name="total_cost_mech"  readonly='1'/>
+                            <field name="total_overheads"  readonly='1'/>
+                            <field name="total_cost" class="oe_subtotal_footer_separator" readonly='1'/>
                         </group>
                         <field name="comment" placeholder="Terms and conditions..."/>
                     </sheet>
@@ -344,15 +382,18 @@
             <field name="name">bm.estimate.tree</field>
             <field name="model">bm.estimate</field>
             <field name="arch" type="xml">
-                <tree string="Estimate">
-                    <field name="name"/>
-                    <field name="contract_id"/>
+                <tree string="Сметы">
+                    <field name="comment"/>
                     <field name="project_id"/>
                     <field name="partner_id"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="amount"/>
-                    <field name="amount_labor_cost"/>
-                    <field name="amount_mech_cost"/>
+                    <field name="currency_id"/>
+                    <field name="pricing_amount"/>
+                    <field name="total_amount_labor"/>
+                    <field name="total_amount_mech"/>
+                    <field name="total_cost_labor"/>
+                    <field name="total_cost_mech"/>
+                    <field name="overheads"/>
+                    <field name="total_cost"/>
                 </tree>
             </field>
         </record>
@@ -368,28 +409,33 @@
         </record>
         <menuitem action="estimate_act" id="bm_action_estimate" name="Сметы" parent="bm.bm_menu_left"
                   sequence="6"/>
-        <!--Prising-->
+        <!--Расценка-->
         <record id="view_pricing_form" model="ir.ui.view">
             <field name="name">bm.pricing.form</field>
             <field name="model">bm.pricing</field>
             <field name="arch" type="xml">
-                <form string="Pricing">
-                    <sheet string="Pricing">
+                <form string="Расценка">
+                    <sheet string="Расценка">
                         <group name="group_alias" colspan="2" col="2">
                             <group>
                                 <field name="code"/>
-                                <field name="name"/>
+                                <field name="rationale"/>
+                                <field name="name" string="Название"/>
                                 <field name="pricing_uom"/>
                             </group>
-                            <group>
-                                <field name="labor_cost"/>
-                                <field name="mech_cost"/>
-                                <field name="labor_vol"/>
-                                <field name="mech_vol"/>
+                            <group col="1" colspan="1">
+                                <h3>Количество ресурсов на 1 ед.работы:</h3>
+                                <group>
+                                    <field name="labor_vol" string="Чел. часы"/>
+                                    <field name="mech_vol" string="Маш. часы"/>
+                                </group>
+                                <h3>Стоимость ресурсов по-умолчанию:</h3>
+                                <group>
+                                    <field name="labor_cost" string="Чел. час"/>
+                                    <field name="mech_cost" string="Маш. час"/>
+                                </group>
                             </group>
                         </group>
-                        <label for="rationale" string="Rationale" class="oe_edit_only"/>
-                        <field name="rationale"/>
                     </sheet>
                 </form>
             </field>
@@ -398,15 +444,15 @@
             <field name="name">bm.pricing.tree</field>
             <field name="model">bm.pricing</field>
             <field name="arch" type="xml">
-                <tree string="Pricing">
+                <tree string="Расценки">
+                    <field name="rationale"/>
                     <field name="code"/>
                     <field name="name"/>
                     <field name="pricing_uom"/>
-                    <field name="labor_vol" string='Labor'/>
-                    <field name="labor_cost" string='cost'/>
-                    <field name="mech_vol" string='Mech'/>
-                    <field name="mech_cost" string='cost'/>
-                    <field name="rationale"/>
+                    <field name="labor_vol" string='Трудозатраты'/>
+                    <field name="mech_vol" string='Мех. часы'/>
+                    <field name="labor_cost" string='Стоимость Чел-часа'/>
+                    <field name="mech_cost" string='Стоимость Мех.часа'/>
                 </tree>
             </field>
         </record>
@@ -422,12 +468,12 @@
         </record>
         <menuitem action="pricing_act" id="bm_action_pricing" name="Расценки" parent="bm.bm_menu_left"
                   sequence="7"/>
-        <!--SPJ-->
+        <!--ГПР-->
         <record id="view_spj_form" model="ir.ui.view">
             <field name="name">bm.spj.form</field>
             <field name="model">bm.spj</field>
             <field name="arch" type="xml">
-                <form string="SPJ">
+                <form string="ГПР">
                     <header>
                         <field name="state" widget="statusbar" clickable="True"/>
                     </header>
@@ -446,7 +492,7 @@
                         </group>
                         <!--<h2>Description</h2>-->
                         <field name="lines" context="{}">
-                            <tree widget="one2many_list"  editable="bottom"  >
+                            <tree widget="one2many_list"  editable="bottom">
                                 <field name="estimate_id"/>
                                 <field name="type"/>
                                 <field name="month1"/>
@@ -464,7 +510,7 @@
             <field name="name">bm.spj.tree</field>
             <field name="model">bm.spj</field>
             <field name="arch" type="xml">
-                <tree string="SPJ">
+                <tree string="ГПР">
                     <field name="project_id"/>
                     <field name="currency_id"/>
                     <field name="type"/>

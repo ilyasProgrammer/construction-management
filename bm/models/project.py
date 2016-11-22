@@ -12,15 +12,16 @@ class Project(models.Model):
     _inherit = 'project.project'
     _description = 'Project'
 
-    wbs_id = fields.Many2one('bm.wbs', string='WBS Root')
-    external_spj_id = fields.One2many('bm.spj', 'project_id', string='External SPJ')
-    local_spj_id = fields.One2many('bm.spj', 'project_id', string='Local SPJ')
-    full_name = fields.Char(string='Full name', required=True)
-    address = fields.Char(string='Address')
-    code = fields.Char(string='Object code')
-    engineer_id = fields.Many2one('hr.employee', string='Engineer', required=True)
-    foremen_ids = fields.Many2many('hr.employee', string='Foremen', required=True)
-    partner_id = fields.Boolean()  # mask
+    wbs_ids = fields.One2many('bm.wbs', 'bm_project_id', string='ИСР')
+    external_spj_id = fields.One2many('bm.spj', 'project_id', string='Внешний ГПР')
+    local_spj_id = fields.One2many('bm.spj', 'project_id', string='Внутренний ГПР')
+    full_name = fields.Char(string='Полное имя', required=True)
+    address = fields.Char(string='Адрес')
+    code = fields.Char(string='Код объекта')
+    engineer_id = fields.Many2one('hr.employee', string='Инженер', required=True)
+    foremen_ids = fields.Many2many('hr.employee', string='Прораб', required=True)
+    partner_id = fields.Many2one('res.partner', string='Заказчик', required=True)
+    contractor_id = fields.Many2one('res.partner', string='Подрядчик', required=True)
     state = fields.Selection([('tender', 'Тендер'),
                               ('in_work', 'В работе'),
                               ('done', 'Звершен'),
@@ -29,8 +30,8 @@ class Project(models.Model):
                               ], 'Статус', readonly=True, default='tender')
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'bm.project')],
-                                     string='Attachments')
-    attachment_number = fields.Integer(compute='_get_attachment_number', string="Number of Attachments")
+                                     string='Вложения')
+    attachment_number = fields.Integer(compute='_get_attachment_number', string="Номер")
 
     @api.multi
     def action_get_attachment_tree_view(self):

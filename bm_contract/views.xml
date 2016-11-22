@@ -10,19 +10,12 @@
             <field name="view_mode">kanban,form</field>
             <field name="search_view_id" ref="project.view_project_project_filter"/>
             <field name="context">{'search_default_Current': 1}</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Create a new project.
-                </p><p>
-                    Organize your activities (plan tasks, track issues, invoice timesheets) for internal, personal or customer projects.
-                </p>
-            </field>
         </record>
     <delete id="project.open_view_project_all" model="ir.ui.menu"/>
     <menuitem name="Contracts" id="project.portal_services_projects" parent="portal.portal_projects" action="project.open_view_project_all" sequence="10"/>
 </data>
 <data>
-    <!--Contract-->
+    <!--Договор-->
     <record id="project_project_form_inherit" model="ir.ui.view">
         <field name="name">project.project.form.inherit</field>
         <field name="model">project.project</field>
@@ -42,7 +35,7 @@
                     </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Project Name"/>
+                                <field name="name" placeholder="Название договора"/>
                             </h1>
                             <h3>
                                 <group colspan="3" col="3">
@@ -88,10 +81,13 @@
                                     <tree string="Estimates">
                                         <field name="sequence" widget="handle"/>
                                         <field name="name"/>
-                                        <field name="amount"/>
-                                        <field name="amount_labor_cost"/>
-                                        <field name="amount_mech_cost"/>
-                                        <field name="currency_id"/>
+                                        <field name="pricing_amount"/>
+                                        <field name="total_amount_labor"/>
+                                        <field name="total_amount_mech"/>
+                                        <field name="total_cost_labor"/>
+                                        <field name="total_cost_mech"/>
+                                        <field name="overheads"/>
+                                        <field name="total_cost"/>
                                     </tree>
                                 </field>
                                 <h2>Прорабы</h2>
@@ -129,7 +125,6 @@
                 </tree>
             </field>
         </record>
-
     <record id="bm_open_view_project_all" model="ir.actions.act_window">
             <field name="name">Contract</field>
             <field name="res_model">project.project</field>
@@ -140,7 +135,7 @@
             <field name="context">{}</field>
         </record>
     <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Договоры" parent="bm.bm_menu_left" sequence="3"/>
-    <!--Project-->
+    <!--Проект-->
     <record id="wb_contract_bm_project_form_inherit" model="ir.ui.view">
         <field name="name">bm.project.form.inherit</field>
         <field name="model">bm.project</field>
@@ -151,13 +146,13 @@
                 <xpath expr="//field[@name='foremen_ids']" position="after">
                     <group></group>
                     <h2></h2>
-                    <h2>Contracts</h2>
+                    <h2>Договоры</h2>
                     <field name="contracts_ids" nolabel="1" widget="many2many_list">
                         <tree string="Contracts">
-                            <field name="name"/>
+                            <field name="name" string="Название"/>
                             <field name="code"/>
                             <field name="bm_project_id"/>
-                            <field name="date"/>
+                            <field name="date" string="Дата"/>
                             <field name="state"/>
                             <field name="partner_id"/>
                             <field name="contractor_id"/>
@@ -167,7 +162,7 @@
             </data>
         </field>
     </record>
-    <!--Task-->
+    <!--Задача-->
     <record id="wb_contract_project_task_form_inherit" model="ir.ui.view">
         <field name="name">project.task.form.inherit</field>
         <field name="model">project.task</field>
@@ -178,13 +173,29 @@
                 <xpath expr="//field[@name='engineer_id']" position="after">
                     <field name="foreman_id"/>
                 </xpath>
-                <xpath expr="//field[@name='project_id']" position="before">
+                <xpath expr="//field[@name='project_id']" position="after">
                     <field name="bm_project_id"/>
                 </xpath>
             </data>
         </field>
     </record>
-    <!--Estimate-->
+    <record id="wb_contract_project_task_tree_inherit" model="ir.ui.view">
+        <field name="name">project.task.tree.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.bm_view_task_tree2"/>
+        <field name="priority" eval="60" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="bm_project_id"/>
+                </xpath>
+                <xpath expr="//field[@name='engineer_id']" position="after">
+                    <field name="foreman_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <!--Смета-->
     <record id="wb_contract_estimate_form_inherit" model="ir.ui.view">
         <field name="name">bm.estimate.form.inherit</field>
         <field name="model">bm.estimate</field>
