@@ -108,7 +108,7 @@ class ReportLinesAmount(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
+    type = fields.Selection([('amount', 'кол'), ('time', 'часы')], string='Тип')
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
@@ -123,6 +123,13 @@ class ReportLinesAmount(models.Model):
     d5 = fields.Float(string='Д5')
     d6 = fields.Float(string='Д6')
     d7 = fields.Float(string='Д7')
+    d8 = fields.Float(string='Д8')
+    d9 = fields.Float(string='Д9')
+    d10 = fields.Float(string='Д10')
+    d11 = fields.Float(string='Д11')
+    d12 = fields.Float(string='Д12')
+    d13 = fields.Float(string='Д13')
+    d14 = fields.Float(string='Д14')
 
 
 class ReportLinesLabor(models.Model):
@@ -131,7 +138,7 @@ class ReportLinesLabor(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
+    type = fields.Selection([('amount', 'кол'), ('time', 'часы')], string='Тип')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
@@ -146,6 +153,14 @@ class ReportLinesLabor(models.Model):
     d5 = fields.Float(string='Д5')
     d6 = fields.Float(string='Д6')
     d7 = fields.Float(string='Д7')
+    d8 = fields.Float(string='Д8')
+    d9 = fields.Float(string='Д9')
+    d10 = fields.Float(string='Д10')
+    d11 = fields.Float(string='Д11')
+    d12 = fields.Float(string='Д12')
+    d13 = fields.Float(string='Д13')
+    d14 = fields.Float(string='Д14')
+
 
 
 class ReportLinesMech(models.Model):
@@ -154,7 +169,7 @@ class ReportLinesMech(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
+    type = fields.Selection([('amount', 'кол'), ('time', 'часы')], string='Тип')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
@@ -169,6 +184,13 @@ class ReportLinesMech(models.Model):
     d5 = fields.Float(string='Д5')
     d6 = fields.Float(string='Д6')
     d7 = fields.Float(string='Д7')
+    d8 = fields.Float(string='Д8')
+    d9 = fields.Float(string='Д9')
+    d10 = fields.Float(string='Д10')
+    d11 = fields.Float(string='Д11')
+    d12 = fields.Float(string='Д12')
+    d13 = fields.Float(string='Д13')
+    d14 = fields.Float(string='Д14')
 
 
 

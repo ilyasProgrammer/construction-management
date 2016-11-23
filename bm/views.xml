@@ -319,6 +319,13 @@
                                     <field name="d5"/>
                                     <field name="d6"/>
                                     <field name="d7"/>
+                                    <field name="d8"/>
+                                    <field name="d9"/>
+                                    <field name="d10"/>
+                                    <field name="d11"/>
+                                    <field name="d12"/>
+                                    <field name="d13"/>
+                                    <field name="d14"/>
                                 </tree>
                             </field>
                         </page>
@@ -339,6 +346,13 @@
                                     <field name="d5"/>
                                     <field name="d6"/>
                                     <field name="d7"/>
+                                    <field name="d8"/>
+                                    <field name="d9"/>
+                                    <field name="d10"/>
+                                    <field name="d11"/>
+                                    <field name="d12"/>
+                                    <field name="d13"/>
+                                    <field name="d14"/>
                                 </tree>
                             </field>
                         </page>
@@ -359,6 +373,13 @@
                                     <field name="d5"/>
                                     <field name="d6"/>
                                     <field name="d7"/>
+                                    <field name="d8"/>
+                                    <field name="d9"/>
+                                    <field name="d10"/>
+                                    <field name="d11"/>
+                                    <field name="d12"/>
+                                    <field name="d13"/>
+                                    <field name="d14"/>
                                 </tree>
                             </field>
                         </page>
