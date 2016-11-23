@@ -15,6 +15,7 @@ class Report(models.Model):
     date = fields.Date(string='Дата завершения', default=fields.Date.context_today, help='Дата подтверждения завершения задания прорабом')
     foreman_id = fields.Many2one('hr.employee', string='Прораб', required=True)  # domain=lambda self: [('id', 'in', self.project_id.foremen_ids)]
     task_id = fields.Many2one('project.task', string='Задание')
+    project_id = fields.Many2one(related='task_id.project_id.bm_project_id')
     amount_lines_ids = fields.One2many('bm.report.lines.amount', 'report_id')
     labor_lines_ids = fields.One2many('bm.report.lines.labor', 'report_id')
     mech_lines_ids = fields.One2many('bm.report.lines.mech', 'report_id')

@@ -374,9 +374,10 @@
             <field name="model">bm.report</field>
             <field name="arch" type="xml">
                 <tree string="Report">
-                    <field name="task_id"/>
-                    <field name="foreman_id"/>
+                    <field name="id"/>
                     <field name="date"/>
+                    <field name="foreman_id"/>
+                    <field name="project_id"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -512,8 +513,8 @@
                                 </group>
                                 <h3>Стоимость ресурсов по-умолчанию:</h3>
                                 <group>
-                                    <field name="labor_cost" string="Чел. час"/>
-                                    <field name="mech_cost" string="Маш. час"/>
+                                    <field name="labor_cost" string="Чел. час" widget="monetary"/>
+                                    <field name="mech_cost" string="Маш. час" widget="monetary"/>
                                 </group>
                             </group>
                         </group>
