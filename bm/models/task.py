@@ -56,7 +56,8 @@ class PricingLines(models.Model):
     _description = 'Task line (estimate)'
 
     task_id = fields.Many2one('project.task')
-    wbs_id = fields.Many2one('bm.wbs', string='WBS')  # TODO фильтр по  ИСР из проекта
+    bm_project_id = fields.Many2one(related='task_id.project_id.bm_project_id')
+    wbs_id = fields.Many2one('bm.wbs', string='WBS')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка')
     code = fields.Char(related='pricing_id.code', string='Код', readonly=True)
     name = fields.Char(related='pricing_id.name', string='Имя', readonly=True)

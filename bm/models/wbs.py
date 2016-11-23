@@ -12,8 +12,8 @@ class WBS(models.Model):
     _inherit = 'product.category'
     _description = 'The hierarchical structure of work'
 
-    code = fields.Char(string='Code')
-    name = fields.Char(string='Name', required=True)
-    description = fields.Text(string='Description', required=True)
+    code = fields.Char(string='Код')
+    name = fields.Char(string='Название', required=True)
+    description = fields.Text(string='Описание', required=True)
     parent_id = fields.Many2one('bm.wbs', 'Родитель', select=True, ondelete='cascade')
-    bm_project_id = fields.Many2one('bm.project')
+    bm_project_id = fields.Many2one('bm.project', string='Проект')

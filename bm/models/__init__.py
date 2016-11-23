@@ -6,4 +6,5 @@ import pricing
 import prod_schedule
 import project
 import report
+import contract
 import task

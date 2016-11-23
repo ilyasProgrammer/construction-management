@@ -40,6 +40,7 @@
                         <group name="first" col="4">
                             <group>
                                 <field name="code"/>
+                                <field name="bm_project_id"/>
                                 <field name="parent_id"/>
                             </group>
                             <group></group>
@@ -188,7 +189,8 @@
                         <page name="est_page" string="Расценки">
                             <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
                                 <tree editable="bottom" string="Pricing Items">
-                                    <field name="wbs_id"/>
+                                    <field name="bm_project_id" invisible="1"/>
+                                    <field name="wbs_id" domain="[('bm_project_id','=',bm_project_id)]"/>
                                     <field name="pricing_id" string='Наименование работ'/>
                                     <field name="pricing_uom"/>
                                     <field name="amount"/>
@@ -218,12 +220,16 @@
                         <div class="oe_clear"/>
                     </xpath>
                     <xpath expr="//field[@name='priority']/../.." position="replace">
-                        <group>
+                        <group col="4" colspan="4">
                             <group>
                                 <field name="code" string="Задание"/>
                             </group>
                             <group>
                                 <field name="date" string="от"/>
+                            </group>
+                            <group>
+                            </group>
+                            <group>
                             </group>
                         </group>
                     </xpath>
@@ -343,42 +349,49 @@
                                 <field name="name" placeholder="Название сметы"/>
                             </h1>
                         </div>
-                        <group name="group_alias" colspan="2" col="2">
-                            <group>
-                                <field name="project_id"/>
-                                <field name="contract_id"/>
-                                <field name="partner_id"/>
-                                <field name="spj_id"/>
-                            </group>
-                            <group>
-                                <field name="currency_id"/>
-                                <field name="overheads"/>
-                            </group>
-                        </group>
-                        <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
-                            <tree editable="bottom" string="Pricing Items">
-                                <field name="code"/>
-                                <field name="pricing_id" string='Работа'/>
-                                <field name="uom"/>
-                                <field name="amount" string='Кол-во'/>
-                                <field name="labor_vol" string='Чел-часы'/>
-                                <field name="labor_vol" string='Чел-часы'/>
-                                <field name="mech_vol" string='Мех.часы'/>
-                                <field name="labor_cost" string='$ чел-часа'/>
-                                <field name="mech_cost" string='$ мех.часа'/>
-                                <field name="amount_unit" string='$ ед.работы'/>
-                                <field name="amount_total" string='Всего'/>
-                            </tree>
-                        </field>
-                        <group class="oe_subtotal_footer oe_right">
-                            <field name="total_amount_labor" readonly='1'/>
-                            <field name="total_amount_mech"  readonly='1'/>
-                            <field name="total_cost_labor"  readonly='1'/>
-                            <field name="total_cost_mech"  readonly='1'/>
-                            <field name="total_overheads"  readonly='1'/>
-                            <field name="total_cost" class="oe_subtotal_footer_separator" readonly='1'/>
-                        </group>
-                        <field name="comment" placeholder="Terms and conditions..."/>
+                        <notebook>
+                            <page name="main_data" string="Основное">
+                                <group name="group_alias" colspan="2" col="2">
+                                    <group>
+                                        <field name="project_id"/>
+                                        <field name="contract_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="spj_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="currency_id"/>
+                                        <field name="overheads"/>
+                                    </group>
+                                </group>
+                                <field name="pricing_ids" widget="one2many_list"
+                                       context="{'pricing_ids': pricing_ids,}">
+                                    <tree editable="bottom" string="Pricing Items">
+                                        <field name="code"/>
+                                        <field name="pricing_id" string='Работа'/>
+                                        <field name="uom"/>
+                                        <field name="amount" string='Кол-во'/>
+                                        <field name="labor_vol" string='Чел-часы'/>
+                                        <field name="labor_vol" string='Чел-часы'/>
+                                        <field name="mech_vol" string='Мех.часы'/>
+                                        <field name="labor_cost" string='$ чел-часа'/>
+                                        <field name="mech_cost" string='$ мех.часа'/>
+                                        <field name="amount_unit" string='$ ед.работы'/>
+                                        <field name="amount_total" string='Всего'/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="total_amount_labor" readonly='1'/>
+                                    <field name="total_amount_mech" readonly='1'/>
+                                    <field name="total_cost_labor" readonly='1'/>
+                                    <field name="total_cost_mech" readonly='1'/>
+                                    <field name="total_overheads" readonly='1'/>
+                                    <field name="total_cost" class="oe_subtotal_footer_separator" readonly='1'/>
+                                </group>
+                            </page>
+                            <page name="description" string="Описание">
+                                <field name="comment" placeholder="Terms and conditions..."/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
