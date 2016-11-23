@@ -71,44 +71,23 @@ class Report(models.Model):
                 brla_line = brla.create({
                     'pricing_id': l.pricing_id.id,
                     'type': 'amount',
-                    'plan_amount': l.plan_amount,
-                    'sequence': l.sequence,
-                })
-                brla_lines.append(brla_line.id)
-                brla_line = brla.create({
-                    'pricing_id': l.pricing_id.id,
-                    'type': 'time',
-                    'plan_amount': l.plan_amount,
+                    'plan_amount': l.amount,
                     'sequence': l.sequence,
                 })
                 brla_lines.append(brla_line.id)
 
                 brll_line = brll.create({
                     'pricing_id': l.pricing_id.id,
-                    'type': 'amount',
-                    'plan_labor': l.plan_labor,
-                    'sequence': l.sequence,
-                })
-                brll_lines.append(brll_line.id)
-                brll_line = brll.create({
-                    'pricing_id': l.pricing_id.id,
                     'type': 'time',
-                    'plan_labor': l.plan_labor,
+                    'plan_labor': l.labor_vol,
                     'sequence': l.sequence,
                 })
                 brll_lines.append(brll_line.id)
 
                 brlm_line = brlm.create({
                     'pricing_id': l.pricing_id.id,
-                    'type': 'amount',
-                    'plan_mech': l.plan_mech,
-                    'sequence': l.sequence,
-                })
-                brlm_lines.append(brlm_line.id)
-                brlm_line = brlm.create({
-                    'pricing_id': l.pricing_id.id,
                     'type': 'time',
-                    'plan_mech': l.plan_mech,
+                    'plan_mech': l.mech_vol,
                     'sequence': l.sequence,
                 })
                 brlm_lines.append(brlm_line.id)
@@ -129,7 +108,7 @@ class ReportLinesAmount(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'время')], string='Тип')
+    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
@@ -152,7 +131,7 @@ class ReportLinesLabor(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'время')], string='Тип')
+    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     code = fields.Char(related='pricing_id.code', readonly=True)
@@ -175,7 +154,7 @@ class ReportLinesMech(models.Model):
 
     report_id = fields.Many2one('bm.report')
     sequence = fields.Integer()
-    type = fields.Selection([('amount', 'кол-во'), ('time', 'время')], string='Тип')
+    type = fields.Selection([('amount', 'кол-во'), ('time', 'часы')], string='Тип')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка', required=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', readonly=True)
     code = fields.Char(related='pricing_id.code', readonly=True)

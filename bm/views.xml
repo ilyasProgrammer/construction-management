@@ -194,9 +194,10 @@
                                     <field name="wbs_id" domain="[('bm_project_id','=',bm_project_id)]"/>
                                     <field name="pricing_id" string='Наименование работ'/>
                                     <field name="pricing_uom"/>
-                                    <field name="plan_amount"/>
-                                    <field name="plan_labor"/>
-                                    <field name="plan_mech"/>
+                                    <!--<field name="plan_amount"/>-->
+                                    <!--<field name="plan_labor"/>-->
+                                    <!--<field name="plan_mech"/>-->
+                                    <field name="amount"/>
                                     <field name="labor_vol" string='Чел.часы'/>
                                     <field name="mech_vol" string='Мех.часы'/>
                                     <field name="comment"/>
