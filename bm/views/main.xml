@@ -213,6 +213,15 @@
                     <xpath expr="//field[@name='kanban_state']" position="replace">
                         <div class="oe_clear"/>
                     </xpath>
+                    <xpath expr="//page[@name='description_page']" position="replace">
+                        <page name="description_page" string="Описание">
+                            <field name="description" type="html"/>
+                            <div class="oe_clear"/>
+                        </page>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']/../../.." position="replace">
+                        <div class="oe_clear"/>
+                    </xpath>
                     <xpath expr="//div[@name='button_box']" position="replace">
                         <div class="oe_clear"/>
                     </xpath>
