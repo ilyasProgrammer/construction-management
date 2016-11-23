@@ -56,6 +56,7 @@ class PricingLines(models.Model):
     _description = 'Task line (estimate)'
 
     task_id = fields.Many2one('project.task')
+    sequence = fields.Integer()
     bm_project_id = fields.Many2one(related='task_id.project_id.bm_project_id')
     wbs_id = fields.Many2one('bm.wbs', string='WBS')
     pricing_id = fields.Many2one('bm.pricing', string='Расценка')
@@ -63,7 +64,9 @@ class PricingLines(models.Model):
     name = fields.Char(related='pricing_id.name', string='Имя', readonly=True)
     rationale = fields.Char(related='pricing_id.rationale', string='Основание', readonly=True)
     pricing_uom = fields.Many2one(related='pricing_id.pricing_uom', string='Ед. изм.', readonly=True)
-    amount = fields.Float(string='Количество', required=True)
+    plan_amount = fields.Float(string='План. колич.', required=True)
+    plan_labor = fields.Float(string='План. труд.', required=True)
+    plan_mech = fields.Float(string='План. маш.', required=True)
     labor_cost = fields.Float(string='Цена часа работы', help='Стоимость часа работ')
     mech_cost = fields.Float(string='Цена машинного часа', help='Стоимость машинного часа')
     labor_vol = fields.Float(string='Количество работы', help='Объем работ')

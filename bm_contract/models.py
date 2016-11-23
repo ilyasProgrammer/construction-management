@@ -21,7 +21,9 @@ class Contract(models.Model):
     contractor_id = fields.Many2one('res.partner', string='Подрядчик', required=True)
     estimate_ids = fields.One2many('bm.estimate', 'contract_id', string='Сметы')
     rate = fields.Float(string='Курс', required=True)
-    amount = fields.Float(string='Сумма')
+    prev_rate = fields.Float(string='Предыдущий курс')
+    amount = fields.Float(string='Сумма договора')
+    amount_estimates = fields.Float(string='Сумма по сметам', compute='_compute_amount', store=True)
     subject = fields.Text(string='Предмет')
     total_tasks_amount = fields.Integer(compute='_compute_amount', store=True)
     total_reports_amount = fields.Integer(compute='_compute_amount', store=True)
@@ -38,6 +40,10 @@ class Contract(models.Model):
     hide_rate = fields.Boolean(compute='_compute_vision', store=True, default=True)
     # tasks_ids - in parent model
 
+    @api.onchange('estimate_ids')
+    def onchange_estimate_ids(self):
+        self._compute_amount()
+
     @api.multi
     @api.depends('task_ids', 'estimate_ids')
     def _compute_amount(self):
@@ -45,6 +51,7 @@ class Contract(models.Model):
             rec.total_tasks_amount = len(rec.task_ids)
             rec.total_reports_amount = len(self.env['bm.report'].search([('task_id', 'in', rec.task_ids.ids)]))
             rec.total_estimates_amount = len(self.env['bm.estimate'].search([('contract_id', '=', rec.id)]))
+            rec.amount_estimates = sum(r.total_cost for r in rec.estimate_ids)
         all_proj = self.env['bm.project'].search([])
         for proj in all_proj:
             if len(proj.contracts_ids):
@@ -53,16 +60,16 @@ class Contract(models.Model):
                 proj_reports = self.env['bm.report'].search([('task_id', 'in', proj_tasks.ids)])
                 proj.total_reports_amount = len(proj_reports)
 
-    @api.multi
+    @api.one
     @api.depends('currency_id')
     def _compute_vision(self):
-        for rec in self:
-            basic_currency = self.env.user.company_id.currency_id
-            if rec.currency_id == basic_currency:
-                rec.hide_rate = True
-                rec.rate = 1
-            else:
-                rec.hide_rate = False
+        basic_currency = self.env.user.company_id.currency_id
+        if self.currency_id == basic_currency:
+            self.hide_rate = True
+            self.prev_rate = self.rate
+            self.rate = 1
+        else:
+            self.hide_rate = False
 
 
 class Project(models.Model):

@@ -187,13 +187,16 @@
                             </group>
                         </page>
                         <page name="est_page" string="Расценки">
-                            <field name="pricing_ids" widget="one2many_list" context="{'pricing_ids': pricing_ids,}">
-                                <tree editable="bottom" string="Pricing Items">
+                            <field name="pricing_ids" context="{'pricing_ids': pricing_ids,}">
+                                <tree editable="bottom" widget="one2many_list" string="Pricing Items">
+                                    <field name="sequence" widget="handle"/>
                                     <field name="bm_project_id" invisible="1"/>
                                     <field name="wbs_id" domain="[('bm_project_id','=',bm_project_id)]"/>
                                     <field name="pricing_id" string='Наименование работ'/>
                                     <field name="pricing_uom"/>
-                                    <field name="amount"/>
+                                    <field name="plan_amount"/>
+                                    <field name="plan_labor"/>
+                                    <field name="plan_mech"/>
                                     <field name="labor_vol" string='Чел.часы'/>
                                     <field name="mech_vol" string='Мех.часы'/>
                                     <field name="comment"/>
@@ -202,7 +205,7 @@
                         </page>
                         <page name="reports_page" string="Отчеты">
                             <field name="report_ids" context="{'task_id': id,'foreman_id': foreman_id,}">
-                                <tree editable="bottom">
+                                <tree widget="one2many_list" >
                                     <field name="foreman_id"/>
                                     <field name="date"/>
                                     <field name="state"/>
@@ -251,7 +254,8 @@
             <field eval="2" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Задания">
-                    <field name="code" string="ID"/>
+                    <field name="id" string="ID"/>
+                    <field name="code" string="Номер"/>
                     <field name="date"/>
                     <field name="engineer_id"/>
                     <field name="total_reports_amount"/>
@@ -277,7 +281,6 @@
                     <header>
                         <field name="state" widget="statusbar" clickable="True"/>
                     </header>
-                    <sheet string="Report">
                         <div class="oe_button_box" name="button_box" groups="base.group_user">
                             <button name="action_get_attachment_tree_view"
                                     class="oe_stat_button"
@@ -297,20 +300,72 @@
                                 <field name="date"/>
                             </group>
                         </group>
-                        <field name="lines_ids" widget="one2many_list" context="{'report_id': id,}">
-                            <tree editable="bottom" string="Pricing Items">
-                                <field name="pricing_id"/>
-                                <field name="code"/>
-                                <field name="name"/>
-                                <field name="pricing_uom"/>
-                                <field name="amount"/>
-                                <field name="labor_vol" string='Чел.часы'/>
-                                <field name="mech_vol" string='Мех.часы'/>
-                                <field name="labor_cost" string='$ чел-часа'/>
-                                <field name="mech_cost" string='$ мех.часа'/>
-                            </tree>
-                        </field>
-                    </sheet>
+                    <notebook>
+                        <page name="a" string="Количество">
+                            <field name="amount_lines_ids" context="{'report_id': id,}">
+                                <tree string="Pricing Items" widget="one2many_list"  editable="bottom"  colors="blue:type=='amount';green:type=='time'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="pricing_id"/>
+                                    <field name="code"/>
+                                    <field name="pricing_uom"/>
+                                    <field name="plan_amount" string="План кол." readonly="1"/>
+                                    <field name="fact_amount" string="Σ кол."/>
+                                    <field name="type" readonly="1"/>
+                                    <field name="d1"/>
+                                    <field name="d2"/>
+                                    <field name="d3"/>
+                                    <field name="d4"/>
+                                    <field name="d5"/>
+                                    <field name="d6"/>
+                                    <field name="d7"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="b" string="Трудозатраты">
+                            <field name="labor_lines_ids" context="{'report_id': id,}">
+                                <tree string="Pricing Items" widget="one2many_list"  editable="bottom" colors="blue:type=='amount';green:type=='time'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="pricing_id"/>
+                                    <field name="code"/>
+                                    <field name="pricing_uom"/>
+                                    <field name="plan_labor" string="План труд" readonly="1"/>
+                                    <field name="fact_labor" string="Σ труд"/>
+                                    <field name="type" readonly="1"/>
+                                    <field name="d1"/>
+                                    <field name="d2"/>
+                                    <field name="d3"/>
+                                    <field name="d4"/>
+                                    <field name="d5"/>
+                                    <field name="d6"/>
+                                    <field name="d7"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="c" string="Машины">
+                            <field name="mech_lines_ids" context="{'report_id': id,}">
+                                <tree string="Pricing Items" widget="one2many_list"  editable="bottom" colors="blue:type=='amount';green:type=='time'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="pricing_id"/>
+                                    <field name="code"/>
+                                    <field name="pricing_uom"/>
+                                    <field name="plan_mech" string="План маш." readonly="1"/>
+                                    <field name="fact_mech" string="Σ маш."/>
+                                    <field name="type" readonly="1"/>
+                                    <field name="d1"/>
+                                    <field name="d2"/>
+                                    <field name="d3"/>
+                                    <field name="d4"/>
+                                    <field name="d5"/>
+                                    <field name="d6"/>
+                                    <field name="d7"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                    </group>
+                    <h3>Комментарий</h3>
+                    <field name="comment"/>
                 </form>
             </field>
         </record>
@@ -380,11 +435,10 @@
                                         <field name="uom"/>
                                         <field name="amount" string='Кол-во'/>
                                         <field name="labor_vol" string='Чел-часы'/>
-                                        <field name="labor_vol" string='Чел-часы'/>
                                         <field name="mech_vol" string='Мех.часы'/>
                                         <field name="labor_cost" string='$ чел-часа'/>
-                                        <field name="mech_cost" string='$ мех.часа'/>
-                                        <field name="amount_unit" string='$ ед.работы'/>
+                                        <field name="mech_cost" string='мех.часа'/>
+                                        <field name="amount_unit" string='ед.работы'/>
                                         <field name="amount_total" string='Всего'/>
                                     </tree>
                                 </field>

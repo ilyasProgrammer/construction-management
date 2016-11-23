@@ -80,6 +80,10 @@ class Estimate(models.Model):
             res['spj_id'] = self._context['spj_id']
         if self._context.get('project_id', False):
             res['project_id'] = self._context['project_id']
+        if self._context.get('contract_id', False):
+            res['contract_id'] = self._context['contract_id']
+        if self._context.get('project_id', False):
+            res['project_id'] = self._context['project_id']
         return res
 
 

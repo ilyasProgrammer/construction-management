@@ -53,19 +53,20 @@
                         </div>
                         <notebook>
                             <page string="Основное">
-                                <div colspan="3" >
+                                <div colspan="3">
                                     <group>
-                                    <group>
-                                        <field name="bm_project_id"/>
-                                        <field name="partner_id"/>
-                                        <field name="contractor_id"/>
-                                    </group>
-                                    <group>
-                                        <field name="currency_id"/>
-                                        <field name="hide_rate" invisible="1"/>
-                                        <field name="rate" attrs="{'invisible': [('hide_rate', '=', True)]}"/>
-                                        <field name="amount"/>
-                                    </group>
+                                        <group>
+                                            <field name="bm_project_id"/>
+                                            <field name="partner_id"/>
+                                            <field name="contractor_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="currency_id"/>
+                                            <field name="hide_rate" invisible="1"/>
+                                            <field name="rate" attrs="{'invisible': [('hide_rate', '=', True)]}"/>
+                                            <field name="amount"/>
+                                            <field name="amount_estimates"/>
+                                        </group>
                                     </group>
                                     <group>
                                         <group>
@@ -75,10 +76,11 @@
                                             <field name="finish"/>
                                         </group>
                                     </group>
-                                 </div>
-                                <h2>Сметы</h2>
-                                <field name="estimate_ids" nolabel="1" widget="many2many_list">
-                                    <tree string="Estimates">
+                                </div>
+                            </page>
+                            <page string="Сметы">
+                                <field name="estimate_ids"  context="{'contract_id': id,'project_id': bm_project_id,}">
+                                    <tree string="Сметы">
                                         <field name="sequence" widget="handle"/>
                                         <field name="name"/>
                                         <field name="pricing_amount"/>
@@ -90,9 +92,8 @@
                                         <field name="total_cost"/>
                                     </tree>
                                 </field>
-                                <group></group>
-                                <h2></h2>
-                                <h2>Прорабы</h2>
+                            </page>
+                            <page string="Прорабы">
                                 <field name="foremen_ids" nolabel="1" widget="many2many_list">
                                     <tree string="Foremen">
                                         <field name="name"/>
@@ -101,9 +102,8 @@
                                         <field name="department_id"/>
                                     </tree>
                                 </field>
-                                <group></group>
-                                <h2></h2>
-                                <h2>Предмет договора</h2>
+                            </page>
+                            <page string="Предмет договора">
                                 <field name="subject"/>
                             </page>
                         </notebook>

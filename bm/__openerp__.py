@@ -12,7 +12,7 @@
         'project',
     ],
     'data': [
-        'views/main.xml',
+        'views.xml',
         'data/records.xml',
     ],
     'qweb': [
