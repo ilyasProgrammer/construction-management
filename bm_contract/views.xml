@@ -79,7 +79,7 @@
                                 </div>
                             </page>
                             <page string="Сметы">
-                                <field name="estimate_ids"  context="{'contract_id': id,'project_id': bm_project_id,}">
+                                <field name="estimate_ids" widget="many2many"  domain="[('contract_id','=',False)]" context="{'contract_id': id,'project_id': bm_project_id,}">
                                     <tree string="Сметы">
                                         <field name="sequence" widget="handle"/>
                                         <field name="name"/>
@@ -112,33 +112,35 @@
             </data>
         </field>
     </record>
-    <record id="project_project_tree" model="ir.ui.view">
-            <field name="name">project.project.tree</field>
-            <field name="model">project.project</field>
-            <field name="arch" type="xml">
-                <tree string="Договоры">
-                    <field name="bm_project_id"/>
-                    <field name="name" string="Договор"/>
-                    <field name="date" string="От"/>
-                    <field name="currency_id"/>
-                    <field name="amount"/>
-                    <field name="partner_id"/>
-                    <field name="contractor_id"/>
-                    <field name="state"/>
-                    <field name="total_estimates_amount" string="Всего смет"/>
-                </tree>
-            </field>
-        </record>
-    <record id="bm_open_view_project_all" model="ir.actions.act_window">
-            <field name="name">Договор</field>
-            <field name="res_model">project.project</field>
-            <field name="view_type">form</field>
-            <field name="domain">[]</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="project.view_project_project_filter"/>
-            <field name="context">{}</field>
-        </record>
-    <menuitem action="bm_open_view_project_all" id="menu_projects_contract" name="Договоры" parent="bm.bm_menu_left" sequence="3"/>
+    <record id="project_project_tree_view" model="ir.ui.view">
+        <field name="name">project.project.tree</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <tree string="Договоры">
+                <field name="bm_project_id"/>
+                <field name="name" string="Договор"/>
+                <field name="date" string="От"/>
+                <field name="currency_id"/>
+                <field name="amount"/>
+                <field name="partner_id"/>
+                <field name="contractor_id"/>
+                <field name="state"/>
+                <field name="total_estimates_amount" string="Всего смет"/>
+            </tree>
+        </field>
+    </record>
+    <record id="project_project_tree_act" model="ir.actions.act_window">
+        <field name="name">Договор</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="project_project_tree_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Создайте новый Договор
+            </p>
+        </field>
+    </record>
+    <menuitem action="project_project_tree_act" id="menu_projects_contract" name="Договоры" parent="bm.bm_menu_left" sequence="3"/>
     <!--Проект-->
     <record id="wb_contract_bm_project_form_inherit" model="ir.ui.view">
         <field name="name">bm.project.form.inherit</field>
@@ -151,7 +153,7 @@
                     <group></group>
                     <h2></h2>
                     <h2>Договоры</h2>
-                    <field name="contracts_ids" nolabel="1" widget="many2many_list">
+                    <field name="contracts_ids" nolabel="1" widget="many2many" domain="[('bm_project_id','=',False)]">
                         <tree string="Contracts">
                             <field name="name" string="Название"/>
                             <field name="code"/>
